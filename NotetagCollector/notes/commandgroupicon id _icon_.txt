@@ -1,0 +1,3 @@
+<Battle Commands>
+i_icon_-SType:id
+</Battle Commands>

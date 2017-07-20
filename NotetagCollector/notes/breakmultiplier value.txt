@@ -1,0 +1,3 @@
+<Before Eval>
+item._breakMultiplier = item._breakMultiplier || value ;
+</Before Eval>

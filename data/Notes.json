@@ -1,0 +1,22 @@
+{
+"breakmultiplier" : [
+ "<Before Eval>",
+ "item._breakMultiplier = item._breakMultiplier || $$1 ;",
+ "</Before Eval>" 
+],
+"commandgroup" : [
+ "<Battle Commands>",
+ "STypes:$$1",
+ "</Battle Commands>" 
+],
+"commandgroupicon" : [
+ "<Battle Commands>",
+ "i$$2-SType:$$1",
+ "</Battle Commands>" 
+],
+"commandskill" : [
+ "<Battle Commands>",
+ "Skill:$$1",
+ "</Battle Commands>" 
+]
+}
