@@ -1,5 +1,21 @@
 [
-null,
-{"id":1,"expanded":false,"name":"MAP001","order":1,"parentId":0,"scrollX":699,"scrollY":451.5},
-{"id":2,"expanded":false,"name":"Starting Cave","order":2,"parentId":0,"scrollX":838.8,"scrollY":541.8}
+  null,
+  {
+    "id": 1,
+    "expanded": false,
+    "name": "MAP001",
+    "order": 1,
+    "parentId": 0,
+    "scrollX": 699,
+    "scrollY": 451.5
+  },
+  {
+    "id": 2,
+    "expanded": false,
+    "name": "Starting Cave",
+    "order": 2,
+    "parentId": 0,
+    "scrollX": 838.8,
+    "scrollY": 541.8
+  }
 ]
