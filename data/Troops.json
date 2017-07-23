@@ -5,14 +5,14 @@
     "members": [
       {
         "enemyId": 1,
-        "x": 336,
+        "x": 309,
         "y": 436,
         "hidden": false
       },
       {
         "enemyId": 1,
-        "x": 480,
-        "y": 436,
+        "x": 507,
+        "y": 394,
         "hidden": false
       }
     ],
