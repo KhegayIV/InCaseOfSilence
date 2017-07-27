@@ -1265,9 +1265,24 @@ DreamX.Ext_BattleStatusCore = DreamX.Ext_BattleStatusCore || {};
         var color1 = this.hpGaugeColor1();
         var color2 = this.hpGaugeColor2();
 
+		
+		
+		// CHANGED
+		/*
         if (!eval(paramHpHideGauge)) {
             this.drawGauge(eval(paramHpGaugeX), eval(paramHpGaugeY),
                     eval(paramHpGaugeWidth), actor.hpRate(), color1, color2);
+        }*/
+		
+		if (!eval(paramHpHideGauge)) {
+			var x = eval(paramHpGaugeX);
+			var y = eval(paramHpGaugeY);
+			var width = eval(paramHpGaugeWidth)
+			
+            this.drawGauge(x, y, width
+                    , actor.hpRate(), color1, color2);
+			
+			this.drawActorVulnerability(actor, x, y - this.gaugeHeight()/2, width);
         }
 
         if (Imported.YEP_AbsorptionBarrier) {

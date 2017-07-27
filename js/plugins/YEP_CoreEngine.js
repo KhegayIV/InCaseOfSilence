@@ -1937,6 +1937,34 @@ Window_Base.prototype.drawActorTp = function(actor, x, y, width) {
       'right');
 };
 
+// CHANGED (ADD)
+Window_Base.prototype.drawActorVulnerability = function(battler, x, y, width) {
+	var height = this.gaugeHeight();
+	var vul = battler._vulnerability || 0;
+	if (vul < 0) {
+		var color = Utils.rgbToCssColor(0, parseInt(255*(1+vul/100.0)), parseInt(128*(1+vul/100.0)));
+	} else if (vul < 100){
+		var color = Utils.rgbToCssColor(parseInt(255*(vul/100.0)), 0, 0);
+	} else if (vul < 500) {
+		var color = Utils.rgbToCssColor(255, parseInt(128*((vul-100)/400.0)), 0);
+	} else {
+		var color = Utils.rgbToCssColor(255, 128+parseInt(96*((vul-500)/500.0)), 0)
+	}
+	
+	
+	
+    var gaugeY = y + this.lineHeight() - height;
+	
+	this.contents.fillRect(x, gaugeY + height/4, width, height/4, color);
+	if (vul < 0) {
+		this.drawText(vul+'%', x, y, width, 'center');
+	} else {
+		this.drawText('+'+vul+'%', x, y, width, 'center');
+	}
+
+	
+}
+
 Window_Base.prototype.drawActorSimpleStatus = function(actor, x, y, width) {
     var lineHeight = this.lineHeight();
     var xpad = Window_Base._faceWidth + (2 * Yanfly.Param.TextPadding);
