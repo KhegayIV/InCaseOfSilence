@@ -605,7 +605,11 @@ Window_VisualHPGauge.prototype.drawActorHp = function(actor, x, y, width) {
     if (Imported.YEP_AbsorptionBarrier && actor.barrierPoints() > 0) {
       ww = this.drawBarrierGauge(actor, x, y, width);
     } else {
+		
       this.drawGauge(x, y, width, rate, color1, color2);
+	  
+		// CHANGED (ADD)
+	  this.drawActorVulnerability(actor, x, y, width);
     }
     if (Yanfly.Param.VHGShowHP) {
       this.changeTextColor(this.systemColor());
