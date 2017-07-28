@@ -1870,6 +1870,19 @@ Window_Base.prototype.tpCostColor = function() {
     return this.textColor(Yanfly.Param.ColorTpCost);
 };
 
+// CHANGED (ADD)
+Window_Base.prototype.drawGaugeNoBack = function(dx, dy, dw, rate, color1, color2) {
+	var fillW = Math.floor(dw * rate).clamp(0, dw);
+	var gaugeH = this.gaugeHeight();
+	var gaugeY = dy + this.lineHeight() - gaugeH - 2;
+	if (eval(Yanfly.Param.GaugeOutline)) {
+		fillW = Math.max(fillW - 2, 0);
+		gaugeH -= 2;
+		dx += 1;
+	}
+  this.contents.gradientFillRect(dx, gaugeY, fillW, gaugeH, color1, color2);
+}
+
 Window_Base.prototype.drawGauge = function(dx, dy, dw, rate, color1, color2) {
   var color3 = this.gaugeBackColor();
   var fillW = Math.floor(dw * rate).clamp(0, dw);

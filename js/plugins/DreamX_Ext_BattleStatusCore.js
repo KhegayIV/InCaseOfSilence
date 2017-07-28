@@ -1281,6 +1281,9 @@ DreamX.Ext_BattleStatusCore = DreamX.Ext_BattleStatusCore || {};
 			
             this.drawGauge(x, y, width
                     , actor.hpRate(), color1, color2);
+					
+			var rate = (actor.hp - actor.def)/actor.mhp
+			this.drawGaugeNoBack(x, y, width, rate, this.textColor(1),this.textColor(9))
 			
 			this.drawActorVulnerability(actor, x, y - this.gaugeHeight()/2, width);
         }

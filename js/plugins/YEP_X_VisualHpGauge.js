@@ -609,6 +609,8 @@ Window_VisualHPGauge.prototype.drawActorHp = function(actor, x, y, width) {
       this.drawGauge(x, y, width, rate, color1, color2);
 	  
 		// CHANGED (ADD)
+	  rate = (actor.hp - actor.def)/actor.mhp
+	  this.drawGaugeNoBack(x, y, width, rate, this.textColor(1),this.textColor(9))
 	  this.drawActorVulnerability(actor, x, y, width);
     }
     if (Yanfly.Param.VHGShowHP) {
