@@ -1940,27 +1940,10 @@ Window_Base.prototype.drawActorTp = function(actor, x, y, width) {
 // CHANGED (ADD)
 Window_Base.prototype.drawActorVulnerability = function(battler, x, y, width) {
 	var height = this.gaugeHeight();
-	var vul = battler._vulnerability || 0;
-	if (vul < 0) {
-		var color = Utils.rgbToCssColor(0, parseInt(255*(1+vul/100.0)), parseInt(128*(1+vul/100.0)));
-	} else if (vul < 100){
-		var color = Utils.rgbToCssColor(parseInt(255*(vul/100.0)), 0, 0);
-	} else if (vul < 500) {
-		var color = Utils.rgbToCssColor(255, parseInt(128*((vul-100)/400.0)), 0);
-	} else {
-		var color = Utils.rgbToCssColor(255, 128+parseInt(96*((vul-500)/500.0)), 0)
-	}
+	var vul = battler._vulnerability || 100;
 	
-	
-	
-    var gaugeY = y + this.lineHeight() - height;
-	
-	this.contents.fillRect(x, gaugeY + height/4, width, height/4, color);
-	if (vul < 0) {
-		this.drawText(vul+'%', x, y, width, 'center');
-	} else {
-		this.drawText('+'+vul+'%', x, y, width, 'center');
-	}
+	this.drawIcon(1, x+ (width - 24)/2,y+4 ); // Vul Icon
+	this.drawText('×'+vul+'%', x, y, width, 'center');
 
 	
 }
