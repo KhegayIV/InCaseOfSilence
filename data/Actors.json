@@ -23,7 +23,7 @@
     "maxLevel": 99,
     "name": "Лиам",
     "nickname": "Герой",
-    "note": "<equip slot: 1 w1>\n<equip slot: 1 w2>\n<equip slot: 1 w3>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   },
   {
@@ -49,7 +49,7 @@
     "maxLevel": 99,
     "name": "Кира",
     "nickname": "Комок счастья и радости",
-    "note": "<equip slot: 1 w5>\n<equip slot: 1 w6>\n<equip slot: 1 w4>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   },
   {
@@ -75,7 +75,7 @@
     "maxLevel": 99,
     "name": "Алексис",
     "nickname": "Колдунья",
-    "note": "<equip slot: 1 w7>\n<equip slot: 1>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   },
   {
@@ -101,7 +101,7 @@
     "maxLevel": 99,
     "name": "Оскар",
     "nickname": "Он шикарен",
-    "note": "<equip slot: 1 w8>\n<equip slot: 1 w9>\n<equip slot: 1 w10>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   }
 ]

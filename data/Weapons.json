@@ -35,7 +35,7 @@
   },
   {
     "id": 2,
-    "animationId": 6,
+    "animationId": 0,
     "description": "",
     "etypeId": 1,
     "traits": [
@@ -50,9 +50,9 @@
         "value": 0
       }
     ],
-    "iconIndex": 97,
-    "name": "Порез",
-    "note": "<<commandskill 4>>",
+    "iconIndex": 0,
+    "name": "",
+    "note": "",
     "params": [
       0,
       0,
@@ -63,12 +63,12 @@
       0,
       0
     ],
-    "price": 500,
-    "wtypeId": 1
+    "price": 0,
+    "wtypeId": 0
   },
   {
     "id": 3,
-    "animationId": 1,
+    "animationId": 0,
     "description": "",
     "etypeId": 1,
     "traits": [
@@ -83,9 +83,9 @@
         "value": 0
       }
     ],
-    "iconIndex": 128,
-    "name": "Провокация",
-    "note": "<<commandskill 5>>",
+    "iconIndex": 0,
+    "name": "",
+    "note": "",
     "params": [
       0,
       0,
@@ -96,77 +96,11 @@
       0,
       0
     ],
-    "price": 500,
-    "wtypeId": 1
+    "price": 0,
+    "wtypeId": 0
   },
   {
     "id": 4,
-    "animationId": 11,
-    "description": "",
-    "etypeId": 1,
-    "traits": [
-      {
-        "code": 31,
-        "dataId": 1,
-        "value": 0
-      },
-      {
-        "code": 22,
-        "dataId": 0,
-        "value": 0
-      }
-    ],
-    "iconIndex": 96,
-    "name": "Ошеломление",
-    "note": "<<commandskill 6>>",
-    "params": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "price": 500,
-    "wtypeId": 2
-  },
-  {
-    "id": 5,
-    "animationId": 1,
-    "description": "",
-    "etypeId": 1,
-    "traits": [
-      {
-        "code": 31,
-        "dataId": 1,
-        "value": 0
-      },
-      {
-        "code": 22,
-        "dataId": 0,
-        "value": 0
-      }
-    ],
-    "iconIndex": 96,
-    "name": "Три-атака",
-    "note": "<<commandskill 7>>",
-    "params": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "price": 0,
-    "wtypeId": 2
-  },
-  {
-    "id": 6,
     "animationId": 0,
     "description": "",
     "etypeId": 1,
@@ -182,9 +116,9 @@
         "value": 0
       }
     ],
-    "iconIndex": 96,
-    "name": "Быстрая атака",
-    "note": "<<commandskill 8>>",
+    "iconIndex": 0,
+    "name": "",
+    "note": "",
     "params": [
       0,
       0,
@@ -196,138 +130,6 @@
       0
     ],
     "price": 0,
-    "wtypeId": 2
-  },
-  {
-    "id": 7,
-    "animationId": 0,
-    "description": "",
-    "etypeId": 1,
-    "traits": [
-      {
-        "code": 31,
-        "dataId": 1,
-        "value": 0
-      },
-      {
-        "code": 22,
-        "dataId": 0,
-        "value": 0
-      }
-    ],
-    "iconIndex": 64,
-    "name": "Магия",
-    "note": "<<commandgroupicon 2 ,, 72>>",
-    "params": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "price": 0,
-    "wtypeId": 3
-  },
-  {
-    "id": 8,
-    "animationId": 0,
-    "description": "",
-    "etypeId": 1,
-    "traits": [
-      {
-        "code": 31,
-        "dataId": 1,
-        "value": 0
-      },
-      {
-        "code": 22,
-        "dataId": 0,
-        "value": 0
-      }
-    ],
-    "iconIndex": 26,
-    "name": "Поглощение",
-    "note": "<<commandskill 12>>",
-    "params": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "price": 0,
-    "wtypeId": 4
-  },
-  {
-    "id": 9,
-    "animationId": 0,
-    "description": "",
-    "etypeId": 1,
-    "traits": [
-      {
-        "code": 31,
-        "dataId": 1,
-        "value": 0
-      },
-      {
-        "code": 22,
-        "dataId": 0,
-        "value": 0
-      }
-    ],
-    "iconIndex": 84,
-    "name": "Малое лечение",
-    "note": "<<commandskill 13>>",
-    "params": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "price": 0,
-    "wtypeId": 4
-  },
-  {
-    "id": 10,
-    "animationId": 0,
-    "description": "",
-    "etypeId": 1,
-    "traits": [
-      {
-        "code": 31,
-        "dataId": 1,
-        "value": 0
-      },
-      {
-        "code": 22,
-        "dataId": 0,
-        "value": 0
-      }
-    ],
-    "iconIndex": 84,
-    "name": "Лечение",
-    "note": "<<commandskill 14>>",
-    "params": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "price": 0,
-    "wtypeId": 4
+    "wtypeId": 0
   }
 ]
