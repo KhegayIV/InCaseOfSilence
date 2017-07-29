@@ -1965,7 +1965,10 @@ Window_Base.prototype.drawActorSimpleStatus = function(actor, x, y, width) {
     var lineHeight = this.lineHeight();
     var xpad = Window_Base._faceWidth + (2 * Yanfly.Param.TextPadding);
     var x2 = x + xpad;
-    var width2 = Math.max(180, width - xpad - this.textPadding());
+    
+	//var width2 = Math.max(180, width - xpad - this.textPadding());
+	var width2 = width - xpad - this.textPadding();
+	
 	// CHANGED 
 	/*
     this.drawActorName(actor, x, y);

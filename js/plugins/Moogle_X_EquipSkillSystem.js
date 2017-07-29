@@ -2569,7 +2569,9 @@ Window_EqsSkillStatus.prototype.refresh = function() {
     if (!this._actor) return;
 
     if (Imported.YEP_CoreEngine) {
-        var w = Math.round(this.width / 1.8) - this.padding * 2;
+		// CHANGED
+		// var w = Math.round(this.width / 1.8) - this.padding * 2;
+        var w = Math.round(this.width / 1.3) - this.padding * 2;
         var h = this.height - this.padding * 2;
         if (!eval(Yanfly.Param.MenuTpGauge)) {
             var y = h / 2 - this.lineHeight() * 1.5;
@@ -2580,8 +2582,10 @@ Window_EqsSkillStatus.prototype.refresh = function() {
         var width = w - xpad - this.textPadding();
         this.drawActorFace(this._actor, 0, 0, Window_Base._faceWidth, h);
         this.drawActorSimpleStatus(this._actor, xpad, y, width);
-        var x2 = Math.round(this.width / 1.8) - this.padding * 2;
-        var width2 = this.width - x2 - this.padding * 2;
+		// CHANGED
+        var x2 = Math.round(this.width / 1.3) - this.padding * 2;
+		
+        var width2 = this.width - x2 - this.padding * 2;		
         this.eqsDrawParameters(this._actor, x2, 0, width2);
 
     } else {
@@ -2598,12 +2602,16 @@ Window_EqsSkillStatus.prototype.refresh = function() {
 Window_EqsSkillStatus.prototype.eqsDrawParameters = function(actor, x, y, width) {
     var rect = new Rectangle(x, y, width, this.lineHeight());
     var dx = rect.x;
-    var dy = rect.y + this.lineHeight();
+    //var dy = rect.y + this.lineHeight();
+	var dy = rect.y;
     var dw = rect.width;
     var dh = rect.height;
     var dx2 = dx + this.textPadding();
-    var textDw = dw / 2 - this.textPadding() * 2;
-
+	var textDw = dw - this.textPadding() * 2;
+    //var textDw = dw / 2 - this.textPadding() * 2;
+	
+/*
+	CHANGED
     // Attack
     this.drawDarkRect(dx, dy, dw / 2, dh);
     this.changeTextColor(this.systemColor());
@@ -2645,8 +2653,38 @@ Window_EqsSkillStatus.prototype.eqsDrawParameters = function(actor, x, y, width)
     this.drawText(TextManager.param(7), dx2 + dw / 2, dy + dh * 2, textDw, 'left');
     this.changeTextColor(this.normalColor());
     this.drawText(Yanfly.Util.toGroup(actor.param(7)), dx2 + dw / 2, dy + dh * 2, textDw, 'right');
+*/
+
+	// Attack
+    this.drawDarkRect(dx, dy, dw, dh);
+    this.changeTextColor(this.systemColor());
+    this.drawText(TextManager.param(2), dx2, dy, textDw, 'left');
+    this.changeTextColor(this.normalColor());
+    this.drawText(Yanfly.Util.toGroup(actor.param(2)), dx2, dy, textDw, 'right');
+
+    // Defense
+    this.drawDarkRect(dx, dy + dh, dw, dh);
+    this.changeTextColor(this.systemColor());
+    this.drawText(TextManager.param(3), dx2, dy + dh, textDw, 'left');
+    this.changeTextColor(this.normalColor());
+    this.drawText(Yanfly.Util.toGroup(actor.param(3)), dx2, dy + dh, textDw, 'right');
+
+    // Magic
+    this.drawDarkRect(dx, dy + dh * 2, dw, dh);
+    this.changeTextColor(this.systemColor());
+    this.drawText(TextManager.param(4), dx2, dy + dh * 2, textDw, 'left');
+    this.changeTextColor(this.normalColor());
+    this.drawText(Yanfly.Util.toGroup(actor.param(4)), dx2, dy + dh * 2, textDw, 'right');
+
+    // Magic Defense
+    this.drawDarkRect(dx, dy + dh* 3, dw, dh);
+    this.changeTextColor(this.systemColor());
+    this.drawText(TextManager.param(5), dx2, dy + dh * 3, textDw, 'left');
+    this.changeTextColor(this.normalColor());
+    this.drawText(Yanfly.Util.toGroup(actor.param(5)), dx2, dy + dh * 3, textDw, 'right');
 
     this.resetFontSettings();
+	
 };
 
 Window_EqsSkillStatus.prototype.drawDarkRect = function(dx, dy, dw, dh) {
