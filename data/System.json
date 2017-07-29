@@ -83,7 +83,7 @@
   "battleback1Name": "Castle1",
   "battleback2Name": "Brick",
   "battlerHue": 0,
-  "battlerName": "Dragon",
+  "battlerName": "Fanatic",
   "boat": {
     "bgm": {
       "name": "Ship1",
@@ -385,15 +385,15 @@
     ],
     "params": [
       "Max HP",
-      "Max MP",
+      "",
       "Power",
-      "Defense",
+      "Endurance",
       "Break",
       "Recovery",
       "Agility",
-      "Luck",
-      "Hit",
-      "Evasion"
+      "",
+      "",
+      ""
     ],
     "messages": {
       "actionFailure": "There was no effect on %1!",
@@ -527,7 +527,7 @@
     "",
     ""
   ],
-  "versionId": 93554490,
+  "versionId": 96697897,
   "victoryMe": {
     "name": "Victory1",
     "pan": 0,

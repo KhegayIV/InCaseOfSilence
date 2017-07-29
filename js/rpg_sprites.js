@@ -2628,14 +2628,14 @@ Spriteset_Battle.prototype.createEnemies = function() {
     for (var i = 0; i < enemies.length; i++) {
         sprites[i] = new Sprite_Enemy(enemies[i]);
     }
-    sprites.sort(this.compareEnemySprite.bind(this));
+    sprites.sort(this.EnemySprite.bind(this));
     for (var j = 0; j < sprites.length; j++) {
         this._battleField.addChild(sprites[j]);
     }
     this._enemySprites = sprites;
 };
 
-Spriteset_Battle.prototype.compareEnemySprite = function(a, b) {
+Spriteset_Battle.prototype.EnemySprite = function(a, b) {
     if (a.y !== b.y) {
         return a.y - b.y;
     } else {

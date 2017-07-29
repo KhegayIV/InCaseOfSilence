@@ -81,7 +81,7 @@ Object.defineProperties(Array.prototype, {
      * Checks whether the two arrays are same.
      *
      * @method Array.prototype.equals
-     * @param {Array} array The array to compare to
+     * @param {Array} array The array to  to
      * @return {Boolean} True if the two arrays are same
      */
     equals: {
@@ -4739,16 +4739,16 @@ Tilemap.prototype._isOverpassPosition = function(mx, my) {
  * @private
  */
 Tilemap.prototype._sortChildren = function() {
-    this.children.sort(this._compareChildOrder.bind(this));
+    this.children.sort(this._ChildOrder.bind(this));
 };
 
 /**
- * @method _compareChildOrder
+ * @method _ChildOrder
  * @param {Object} a
  * @param {Object} b
  * @private
  */
-Tilemap.prototype._compareChildOrder = function(a, b) {
+Tilemap.prototype._ChildOrder = function(a, b) {
     if (a.z !== b.z) {
         return a.z - b.z;
     } else if (a.y !== b.y) {
