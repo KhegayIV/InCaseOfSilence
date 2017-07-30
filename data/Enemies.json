@@ -45,7 +45,7 @@
     ],
     "gold": 0,
     "name": "Bat",
-    "note": "<Passive State: 4>",
+    "note": "",
     "params": [
       200,
       0,
@@ -107,7 +107,7 @@
     ],
     "gold": 0,
     "name": "Slime",
-    "note": "<Passive State: 4>",
+    "note": "",
     "params": [
       250,
       0,
@@ -169,7 +169,7 @@
     ],
     "gold": 0,
     "name": "Orc",
-    "note": "<Passive State: 4>",
+    "note": "",
     "params": [
       300,
       0,
@@ -231,7 +231,7 @@
     ],
     "gold": 0,
     "name": "Minotaur",
-    "note": "<Passive State: 4>",
+    "note": "",
     "params": [
       500,
       0,
