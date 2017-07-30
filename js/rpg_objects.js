@@ -2839,6 +2839,38 @@ Game_BattlerBase.prototype.canGuard = function() {
     return this.canUse($dataSkills[this.guardSkillId()]);
 };
 
+
+// CHANGED (ADD)
+// ---
+
+Game_BattlerBase.prototype.randomizeActionSpeed = function() {
+	this._speedAdd = Math.floor(this.agi * (0.1 - Math.rand()*0.2));
+}
+
+Game_BattlerBase.prototype.followCharacter = function(other) {
+	this._follows = other;
+}
+
+Game_BattlerBase.prototype.stopFollowCharacter = function() {
+	this._follows = null;
+}
+
+Game_BattlerBase.prototype.isFollowingCharacter = function(other) {
+	return this._follows === other || this._follows.isFollowing(other);
+}
+
+Game_BattlerBase.prototype.actionSpeed = function() {
+	this._speedAdd = this._speedAdd || 0;
+	var res = this.agi + this._speedAdd;
+	if (!this._follows) {
+		return res;
+	} else {
+		return Math.min(res, this._follows.actionSpeed())
+	}
+};
+
+// ---
+
 //-----------------------------------------------------------------------------
 // Game_Battler
 //
