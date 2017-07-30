@@ -21,9 +21,9 @@
     ],
     "initialLevel": 1,
     "maxLevel": 99,
-    "name": "Лиам",
-    "nickname": "Герой",
-    "note": "<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "name": "Liam",
+    "nickname": "Hero",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   },
   {
@@ -47,9 +47,9 @@
     ],
     "initialLevel": 1,
     "maxLevel": 99,
-    "name": "Кира",
-    "nickname": "Комок счастья и радости",
-    "note": "<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "name": "Kiera",
+    "nickname": "Rogue",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   },
   {
@@ -73,9 +73,9 @@
     ],
     "initialLevel": 1,
     "maxLevel": 99,
-    "name": "Алексис",
-    "nickname": "Колдунья",
-    "note": "<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "name": "Alexis",
+    "nickname": "Sorceress",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   },
   {
@@ -99,9 +99,9 @@
     ],
     "initialLevel": 1,
     "maxLevel": 99,
-    "name": "Оскар",
-    "nickname": "Он шикарен",
-    "note": "<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "name": "Oskar",
+    "nickname": "Healer",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   }
 ]

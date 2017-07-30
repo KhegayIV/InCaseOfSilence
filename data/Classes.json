@@ -28,27 +28,27 @@
         "code": 22,
         "dataId": 2,
         "value": 0.04
+      },
+      {
+        "code": 41,
+        "dataId": 1,
+        "value": 1
       }
     ],
     "learnings": [
       {
-        "level": 2,
+        "level": 1,
         "note": "",
         "skillId": 3
       },
       {
         "level": 1,
         "note": "",
-        "skillId": 4
-      },
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 5
+        "skillId": 1
       }
     ],
     "name": "Hero",
-    "note": "<Passive State: 4>\n\n<Battle Commands>\nWeaponCmd\nItems\nGuard\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,
@@ -898,25 +898,9 @@
         "value": 0.04
       }
     ],
-    "learnings": [
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 6
-      },
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 7
-      },
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 8
-      }
-    ],
+    "learnings": [],
     "name": "Rogue",
-    "note": "<Passive State: 4>\n\n<Battle Commands>\nWeaponCmd\nItems\nGuard\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,
@@ -1766,25 +1750,9 @@
         "value": 0.04
       }
     ],
-    "learnings": [
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 9
-      },
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 10
-      },
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 11
-      }
-    ],
+    "learnings": [],
     "name": "Sorceress",
-    "note": "<Passive State: 4>\n\n<Battle Commands>\nWeaponCmd\nItems\nGuard\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,
@@ -2634,25 +2602,9 @@
         "value": 0.04
       }
     ],
-    "learnings": [
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 12
-      },
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 13
-      },
-      {
-        "level": 1,
-        "note": "",
-        "skillId": 14
-      }
-    ],
+    "learnings": [],
     "name": "Healer",
-    "note": "<Passive State: 4>\n\n<Battle Commands>\nWeaponCmd\nItems\nGuard\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,

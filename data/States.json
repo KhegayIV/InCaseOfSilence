@@ -113,9 +113,15 @@
   },
   {
     "id": 5,
-    "autoRemovalTiming": 0,
+    "autoRemovalTiming": 2,
     "chanceByDamage": 100,
-    "traits": [],
+    "traits": [
+      {
+        "code": 43,
+        "dataId": 4,
+        "value": 1
+      }
+    ],
     "iconIndex": 0,
     "maxTurns": 1,
     "message1": "",
@@ -124,11 +130,11 @@
     "message4": "",
     "minTurns": 1,
     "motion": 0,
-    "name": "",
+    "name": "Waiting",
     "note": "",
     "overlay": 0,
     "priority": 50,
-    "removeAtBattleEnd": false,
+    "removeAtBattleEnd": true,
     "removeByDamage": false,
     "removeByRestriction": false,
     "removeByWalking": false,
