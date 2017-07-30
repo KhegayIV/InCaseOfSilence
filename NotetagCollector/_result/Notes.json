@@ -4,19 +4,56 @@
  "item._breakMultiplier = item._breakMultiplier || $$1 ;",
  "</Before Eval>" 
 ],
-"commandgroup" : [
- "<Battle Commands>",
- "SType:$$1",
- "</Battle Commands>" 
+"speed_state" : [
+ "<Custom Apply Start Effect>",
+ " this.randomizeActionSpeed();",
+ " this.stopFollowCharacter();",
+ "</Custom Apply Start Effect>",
+ "",
+ "<Custom Turn End Effect>",
+ " this.randomizeActionSpeed();",
+ " this.stopFollowCharacter();",
+ "</Custom Turn End Effect>" 
 ],
-"commandgroupicon" : [
- "<Battle Commands>",
- "i$$2-SType:$$1",
- "</Battle Commands>" 
-],
-"commandskill" : [
- "<Battle Commands>",
- "Skill:$$1!",
- "</Battle Commands>" 
+"vulnerability_state" : [
+ "<Custom Apply Effect>",
+ " target._vulnerability = 100;",
+ "</Custom Apply Effect>",
+ "",
+ "<Custom React Effect>",
+ "if (this.isHpEffect() && value > 0) {",
+ " if (!target._result.critical || target._vulnerability > 0) {",
+ "  value = Math.floor(value * (target._vulnerability/100.0));",
+ " }",
+ "}",
+ "</Custom React Effect>",
+ "",
+ "<Custom Respond Effect>",
+ "if (this.isHpEffect() && value > 0) {",
+ " var change = user.mat * (this.item()._breakMultiplier || 1) * (0.9 + Math.random()*0.2);",
+ " if (target._result.critical) {",
+ "  change *= 2;",
+ " }",
+ " if (this.calcElementRate(target) > 1) {",
+ "  change *= 1.5;",
+ " }",
+ " if (this.calcElementRate(target) < 1) {",
+ "  change /= 4;",
+ " }",
+ " target._vulnerability += Math.floor(change);",
+ " if (target._vulnerability > 999) {",
+ "  target._vulnerability = 999;",
+ " }",
+ " if (target._vulnerability < 0) {",
+ "  target._vulnerability = 0;",
+ " }",
+ "}",
+ "</Custom Respond Effect>",
+ "",
+ "<Custom Turn End Effect>",
+ " if (target._vulnerability > 100) {",
+ "  target._vulnerability -= Math.min(target._vulnerability - 100, target.mdf);",
+ " }",
+ "</Custom Turn End Effect>" 
 ]
 }

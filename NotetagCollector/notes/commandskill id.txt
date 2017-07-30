@@ -1,3 +1,0 @@
-<Battle Commands>
-Skill:id
-</Battle Commands>

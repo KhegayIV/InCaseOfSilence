@@ -1,3 +1,0 @@
-<Battle Commands>
-SType:id
-</Battle Commands>
