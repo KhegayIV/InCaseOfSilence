@@ -44,7 +44,12 @@
       {
         "level": 1,
         "note": "",
-        "skillId": 1
+        "skillId": 5
+      },
+      {
+        "level": 1,
+        "note": "",
+        "skillId": 6
       }
     ],
     "name": "Hero",
@@ -896,9 +901,30 @@
         "code": 22,
         "dataId": 2,
         "value": 0.04
+      },
+      {
+        "code": 41,
+        "dataId": 1,
+        "value": 1
       }
     ],
-    "learnings": [],
+    "learnings": [
+      {
+        "level": 1,
+        "note": "",
+        "skillId": 3
+      },
+      {
+        "level": 1,
+        "note": "",
+        "skillId": 7
+      },
+      {
+        "level": 1,
+        "note": "",
+        "skillId": 8
+      }
+    ],
     "name": "Rogue",
     "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
@@ -1748,9 +1774,25 @@
         "code": 22,
         "dataId": 2,
         "value": 0.04
+      },
+      {
+        "code": 41,
+        "dataId": 1,
+        "value": 1
       }
     ],
-    "learnings": [],
+    "learnings": [
+      {
+        "level": 1,
+        "note": "",
+        "skillId": 3
+      },
+      {
+        "level": 1,
+        "note": "",
+        "skillId": 8
+      }
+    ],
     "name": "Sorceress",
     "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
@@ -2600,9 +2642,25 @@
         "code": 22,
         "dataId": 2,
         "value": 0.04
+      },
+      {
+        "code": 41,
+        "dataId": 1,
+        "value": 1
       }
     ],
-    "learnings": [],
+    "learnings": [
+      {
+        "level": 1,
+        "note": "",
+        "skillId": 3
+      },
+      {
+        "level": 1,
+        "note": "",
+        "skillId": 11
+      }
+    ],
     "name": "Healer",
     "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
