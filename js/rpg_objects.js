@@ -2844,7 +2844,7 @@ Game_BattlerBase.prototype.canGuard = function() {
 // ---
 
 Game_BattlerBase.prototype.randomizeActionSpeed = function() {
-	this._speedAdd = Math.floor(this.agi * (0.1 - Math.rand()*0.2));
+	this._speedAdd = Math.floor(this.agi * (0.25 - Math.random()*0.5));
 }
 
 Game_BattlerBase.prototype.followCharacter = function(other) {

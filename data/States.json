@@ -101,7 +101,7 @@
     "minTurns": 1,
     "motion": 0,
     "name": "Global state",
-    "note": "",
+    "note": "<<speed_state>>\n<<vulnerability_state>>",
     "overlay": 0,
     "priority": 99,
     "removeAtBattleEnd": false,
