@@ -6,7 +6,6 @@
   ],
   "speed_state": [
     "<Custom Apply Effect>",
-    "console.log(this)",
     " this.randomizeActionSpeed();",
     " this.stopFollowCharacter();",
     "</Custom Apply Effect>",

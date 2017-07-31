@@ -44,6 +44,11 @@
       {
         "level": 1,
         "note": "",
+        "skillId": 4
+      },
+      {
+        "level": 1,
+        "note": "",
         "skillId": 5
       },
       {
@@ -53,7 +58,7 @@
       }
     ],
     "name": "Hero",
-    "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkill:3!\nSkill:4!\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,

@@ -2855,8 +2855,13 @@ Game_BattlerBase.prototype.stopFollowCharacter = function() {
 	this._follows = null;
 }
 
+
+Game_BattlerBase.prototype.isFollowingSomebody = function() {
+	return this._follows != null;
+}
+
 Game_BattlerBase.prototype.isFollowingCharacter = function(other) {
-	return this._follows === other || this._follows.isFollowing(other);
+	return this._follows != null && (this._follows === other || this._follows.isFollowingCharacter(other));
 }
 
 Game_BattlerBase.prototype.actionSpeed = function() {

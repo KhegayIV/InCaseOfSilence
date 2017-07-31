@@ -48,7 +48,14 @@
       "variance": 20
     },
     "description": "",
-    "effects": [],
+    "effects": [
+      {
+        "code": 21,
+        "dataId": 2,
+        "value1": 1,
+        "value2": 0
+      }
+    ],
     "hitType": 0,
     "iconIndex": 81,
     "message1": "",
@@ -60,7 +67,7 @@
     "repeats": 1,
     "requiredWtypeId1": 0,
     "requiredWtypeId2": 0,
-    "scope": 0,
+    "scope": 11,
     "speed": 0,
     "stypeId": 0,
     "successRate": 100,
@@ -78,26 +85,19 @@
       "variance": 20
     },
     "description": "",
-    "effects": [
-      {
-        "code": 21,
-        "dataId": 5,
-        "value1": 1,
-        "value2": 0
-      }
-    ],
+    "effects": [],
     "hitType": 0,
     "iconIndex": 0,
     "message1": "",
     "message2": "",
     "mpCost": 0,
     "name": "Wait",
-    "note": "<Instant>\n<EQS ignore>",
+    "note": "<Instant>\n<EQS ignore>\n\n<Custom Requirement>\nvalue = !user.isFollowingSomebody()\n</Custom Requirement>\n\n<Custom Select Condition>\nconsole.log('11223')\nif (target === user) {\n  condition = false;\n} else {\n  condition = !target.isFollowingCharacter(user)\n}\n</Custom Select Condition>\n\n<Before Eval>\nuser.followCharacter(target)\n</Before Eval>",
     "occasion": 0,
     "repeats": 1,
     "requiredWtypeId1": 0,
     "requiredWtypeId2": 0,
-    "scope": 11,
+    "scope": 7,
     "speed": 0,
     "stypeId": 0,
     "successRate": 100,
@@ -122,7 +122,7 @@
     "message2": "",
     "mpCost": 0,
     "name": "No wait",
-    "note": "<Instant>",
+    "note": "<Instant>\n<Custom Requirement>\nvalue = user.isFollowingSomebody()\n</Custom Requirement>\n\n<Custom Execution>\nuser.stopFollowCharacter()\n</Custom Execution>",
     "occasion": 0,
     "repeats": 1,
     "requiredWtypeId1": 0,
