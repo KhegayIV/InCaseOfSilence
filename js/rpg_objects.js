@@ -2847,33 +2847,10 @@ Game_BattlerBase.prototype.randomizeActionSpeed = function() {
 	this._speedAdd = Math.floor(this.agi * (0.25 - Math.random()*0.5));
 }
 
-Game_BattlerBase.prototype.followCharacter = function(other) {
-	this._follows = other;
-}
-
-Game_BattlerBase.prototype.stopFollowCharacter = function() {
-	this._follows = null;
-}
-
-
-Game_BattlerBase.prototype.isFollowingSomebody = function() {
-	return this._follows != null;
-}
-
-Game_BattlerBase.prototype.isFollowingCharacter = function(other) {
-	return this._follows != null && (this._follows === other || this._follows.isFollowingCharacter(other));
-}
-
-Game_BattlerBase.prototype.actionSpeed = function() {
+Game_BattlerBase.prototype.randomizedSpeed = function() {
 	this._speedAdd = this._speedAdd || 0;
-	var res = this.agi + this._speedAdd;
-	if (!this._follows) {
-		return res;
-	} else {
-		return Math.min(res, this._follows.actionSpeed())
-	}
+	return this.agi + this._speedAdd;
 };
-
 // ---
 
 //-----------------------------------------------------------------------------

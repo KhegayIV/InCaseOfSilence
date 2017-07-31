@@ -7,12 +7,10 @@
   "speed_state": [
     "<Custom Apply Effect>",
     " this.randomizeActionSpeed();",
-    " this.stopFollowCharacter();",
     "</Custom Apply Effect>",
     "",
     "<Custom Turn End Effect>",
     " this.randomizeActionSpeed();",
-    " this.stopFollowCharacter();",
     "</Custom Turn End Effect>"
   ],
   "vulnerability_state": [

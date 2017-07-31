@@ -58,7 +58,7 @@
       }
     ],
     "name": "Hero",
-    "note": "<Battle Commands>\nSkills\nSkill:3!\nSkill:4!\nGuard\nItems\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkill:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,
@@ -922,6 +922,11 @@
       {
         "level": 1,
         "note": "",
+        "skillId": 4
+      },
+      {
+        "level": 1,
+        "note": "",
         "skillId": 7
       },
       {
@@ -931,7 +936,7 @@
       }
     ],
     "name": "Rogue",
-    "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkill:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,
@@ -1795,11 +1800,16 @@
       {
         "level": 1,
         "note": "",
+        "skillId": 4
+      },
+      {
+        "level": 1,
+        "note": "",
         "skillId": 8
       }
     ],
     "name": "Sorceress",
-    "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkill:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,
@@ -2663,11 +2673,16 @@
       {
         "level": 1,
         "note": "",
+        "skillId": 4
+      },
+      {
+        "level": 1,
+        "note": "",
         "skillId": 11
       }
     ],
     "name": "Healer",
-    "note": "<Battle Commands>\nSkills\nSkillLast:3,4\nGuard\nItems\n</Battle Commands>",
+    "note": "<Battle Commands>\nSkills\nSkill:3,4\nGuard\nItems\n</Battle Commands>",
     "params": [
       [
         1,

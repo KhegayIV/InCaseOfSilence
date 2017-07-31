@@ -113,13 +113,28 @@
   },
   {
     "id": 5,
-    "autoRemovalTiming": 2,
+    "autoRemovalTiming": 1,
     "chanceByDamage": 100,
     "traits": [
       {
         "code": 43,
         "dataId": 4,
         "value": 1
+      },
+      {
+        "code": 21,
+        "dataId": 6,
+        "value": 0.5
+      },
+      {
+        "code": 21,
+        "dataId": 3,
+        "value": 0.5
+      },
+      {
+        "code": 21,
+        "dataId": 2,
+        "value": 1.5
       }
     ],
     "iconIndex": 0,
