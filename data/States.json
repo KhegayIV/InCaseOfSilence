@@ -135,6 +135,11 @@
         "code": 21,
         "dataId": 2,
         "value": 1.5
+      },
+      {
+        "code": 44,
+        "dataId": 2,
+        "value": 1
       }
     ],
     "iconIndex": 0,

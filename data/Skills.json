@@ -85,7 +85,14 @@
       "variance": 20
     },
     "description": "",
-    "effects": [],
+    "effects": [
+      {
+        "code": 21,
+        "dataId": 5,
+        "value1": 1,
+        "value2": 0
+      }
+    ],
     "hitType": 0,
     "iconIndex": 0,
     "message1": "",
@@ -115,13 +122,20 @@
       "variance": 20
     },
     "description": "",
-    "effects": [],
+    "effects": [
+      {
+        "code": 22,
+        "dataId": 5,
+        "value1": 1,
+        "value2": 0
+      }
+    ],
     "hitType": 0,
     "iconIndex": 0,
     "message1": "",
     "message2": "",
     "mpCost": 0,
-    "name": "Act",
+    "name": "Hurry up",
     "note": "<Instant>\n\n<Custom Execution>\nuser.removeState(5)\n</Custom Execution>",
     "occasion": 0,
     "repeats": 1,

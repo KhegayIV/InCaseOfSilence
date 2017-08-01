@@ -2848,6 +2848,7 @@ Game_BattlerBase.prototype.randomizeActionSpeed = function() {
 }
 
 Game_BattlerBase.prototype.randomizedSpeed = function() {
+	console.log(this._speedAdd)
 	this._speedAdd = this._speedAdd || 0;
 	return this.agi + this._speedAdd;
 };
