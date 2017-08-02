@@ -559,7 +559,11 @@ Window_VisualHPGauge.prototype.updateHpPosition = function() {
 Window_VisualHPGauge.prototype.updateDisplayCounter = function() {
     if (this._battler._barrierAltered) {
       this._battler._barrierAltered = false;
-    } else if (this._currentHpValue === this._displayedValue) {
+	  // CHANGED (ADD)
+    } else if (this._battler._requiresGaugeUpdate) {
+		this._battler._requiresGaugeUpdate = false;
+	// ---
+	} else if (this._currentHpValue === this._displayedValue) {
       return;
     }
     var d = this._dropSpeed;
