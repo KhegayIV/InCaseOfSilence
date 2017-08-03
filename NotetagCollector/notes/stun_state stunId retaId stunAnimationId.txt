@@ -1,0 +1,18 @@
+<Custom Turn Start Effect>
+	user._actionPerformed = false;
+	user._interrupted = false;
+</Custom Turn Start Effect>
+
+<Custom Action Start Effect>
+	user._actionPerformed = true;
+</Custom Action Start Effect>
+
+<Custom Respond Effect>
+	if (!target._actionPerformed && value >= target.def) {
+		target._retaLevel = (target._retaLevel || 0) + 1;
+		target.startAnimation(stunAnimationId)
+		target.addState(stunId)
+		target.addState(retaId)
+		target.setStateCounter(retaId, '+'+target._retaLevel)
+	}
+</Custom Respond Effect>

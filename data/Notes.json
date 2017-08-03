@@ -13,6 +13,26 @@
     " this.randomizeActionSpeed();",
     "</Custom Turn End Effect>"
   ],
+  "stun_state": [
+    "<Custom Turn Start Effect>",
+    " user._actionPerformed = false;",
+    " user._interrupted = false;",
+    "</Custom Turn Start Effect>",
+    "",
+    "<Custom Action Start Effect>",
+    " user._actionPerformed = true;",
+    "</Custom Action Start Effect>",
+    "",
+    "<Custom Respond Effect>",
+    " if (!target._actionPerformed && value >= target.def) {",
+    "  target._retaLevel = (target._retaLevel || 0) + 1;",
+    "  target.startAnimation($$3)",
+    "  target.addState($$1)",
+    "  target.addState($$2)",
+    "  target.setStateCounter($$2, '+'+target._retaLevel)",
+    " }",
+    "</Custom Respond Effect>"
+  ],
   "vulnerability_state": [
     "<Custom Apply Effect>",
     " target._vulnerability = 100;",
