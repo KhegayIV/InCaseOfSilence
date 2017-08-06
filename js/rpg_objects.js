@@ -3394,6 +3394,10 @@ Game_Battler.prototype.performSubstitute = function(target) {
 Game_Battler.prototype.performCollapse = function() {
 };
 
+
+//--
+
+
 //-----------------------------------------------------------------------------
 // Game_Actor
 //
@@ -10481,3 +10485,47 @@ Game_Interpreter.prototype.command356 = function() {
 Game_Interpreter.prototype.pluginCommand = function(command, args) {
     // to be overridden by plugins
 };
+
+
+// -----------------------------------------------
+// CHANGED (ADD)
+
+Game_Battler.prototype.reduceMetadata = function(key, reduceFunc, initial) {
+	return undefined;
+}
+
+Game_Battler.prototype.sumMetadata = function(key) {
+	return this.reduceMetadata(key, function(a,b){return a+parseInt(b)}, 0);
+}
+
+
+Game_Battler.prototype.arrayMetadata = function(key) {
+	return this.reduceMetadata(key, function(a,b){return a.concat(b)}, []);
+}
+
+
+Game_Actor.prototype.reduceMetadata = function(key, reduceFunc, initial) {
+	var equipsMeta = this._equips.map(function(slot) {
+		var item = slot._item.object();
+		if (item){
+			return item.meta[key]
+		} else {
+			return null;
+		}
+	})
+	var statesMeta = this._states.map(function(state) {return $dataStates[state].meta[key]})
+	var arr = [this.actor().meta[key], this.currentClass().meta[key]]
+		.concat(equipsMeta, statesMeta)
+		.filter(function(it){return it})
+		.map(function(it){return it.trim()})
+	return arr.reduce(reduceFunc, initial);
+}
+
+Game_Enemy.prototype.reduceMetadata = function(key, reduceFunc, initial) {
+	var statesMeta = this._states.map(function(state) {return $dataStates[state].meta[key]})
+	return [this.enemy().meta[key]]
+		.concat(statesMeta)
+		.filter(function(it){return it})
+		.map(function(it){return it.trim()})
+		.reduce(reduceFunc, initial);
+}

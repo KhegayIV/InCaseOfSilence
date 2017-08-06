@@ -8,7 +8,7 @@
     "classId": 1,
     "equips": [
       1,
-      0
+      1
     ],
     "faceIndex": 0,
     "faceName": "Liam",
@@ -17,13 +17,18 @@
         "code": 51,
         "dataId": 1,
         "value": 1
+      },
+      {
+        "code": 52,
+        "dataId": 5,
+        "value": 1
       }
     ],
     "initialLevel": 1,
     "maxLevel": 99,
     "name": "Liam",
     "nickname": "Hero",
-    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1 w1>\n<equip slot: 2 a1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
     "profile": ""
   },
   {
