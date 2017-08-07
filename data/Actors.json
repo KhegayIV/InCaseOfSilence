@@ -28,7 +28,7 @@
     "maxLevel": 99,
     "name": "Liam",
     "nickname": "Hero",
-    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1 w1>\n<equip slot: 2 a1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1 w1>\n<equip slot: 2 a1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n\n<retaAgi : 5>",
     "profile": ""
   },
   {
@@ -54,7 +54,7 @@
     "maxLevel": 99,
     "name": "Kiera",
     "nickname": "Rogue",
-    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n\n<retaAgi : 5>",
     "profile": ""
   },
   {
@@ -80,7 +80,7 @@
     "maxLevel": 99,
     "name": "Alexis",
     "nickname": "Sorceress",
-    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n\n<retaAgi : 5>",
     "profile": ""
   },
   {
@@ -106,7 +106,7 @@
     "maxLevel": 99,
     "name": "Oskar",
     "nickname": "Healer",
-    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>",
+    "note": "<EQS Max Slots 0 Level 1: 4>\n<equip slot: 1>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n<equip slot: 2>\n\n<retaAgi : 5>",
     "profile": ""
   }
 ]

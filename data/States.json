@@ -205,7 +205,7 @@
     "minTurns": 1,
     "motion": 0,
     "name": "Retaliate",
-    "note": "<Reapply Ignore Turns>\n\n<Custom Turn Start Effect>\t\n\treta = user._retaLevel || 0;\n\t\n\tuser.setAtkPlus((user._retaPow || 0)* reta)\n\tuser.setDefPlus((user._retaEnd || 0)* reta)\n\tuser.setMatPlus((user._retaBrk || 0)* reta)\n\tuser.setMdfPlus((user._retaRcv || 0)* reta)\n\tuser.setAgiPlus((user._retaAgi || 0)* reta)\n\tif (user._retaState && user._retaState > 0) {\n\t\tuser.addState(user._retaState)\n\t}\n</Custom Turn Start Effect>\n\n<Custom Remove Effect>\n\tuser._retaLevel = 0;\n\tuser.setAtkPlus(0)\n\tuser.setDefPlus(0)\n\tuser.setMatPlus(0)\n\tuser.setMdfPlus(0)\n\tuser.setAgiPlus(0)\n\tif (user._retaState && user._retaState > 0) {\n\t\tuser.removeState(user._retaState)\n\t}\n</Custom Remove Effect>\n\n<Hide Turns>\n",
+    "note": "<Reapply Ignore Turns>\n\n<Hide Turns>\n\n<Custom Turn End Effect>\t\n\treta = user._retaLevel || 0;\n\t\n\tuser.setAtkPlus(user.sumMetadata('retaPow')* reta)\n\tuser.setDefPlus(user.sumMetadata('retaEnd')* reta)\n\tuser.setMatPlus(user.sumMetadata('retaBrk')* reta)\n\tuser.setMdfPlus(user.sumMetadata('retaRcv')* reta)\n\tuser.setAgiPlus(user.sumMetadata('retaAgi')* reta)\n\t\n\tuser.arrayMetadata('retaState').forEach(function(state) {user.addState(parseInt(state))})\n</Custom Turn End Effect>\n\n<Custom Remove Effect>\n\tuser._retaLevel = 0;\n\tuser.setAtkPlus(0)\n\tuser.setDefPlus(0)\n\tuser.setMatPlus(0)\n\tuser.setMdfPlus(0)\n\tuser.setAgiPlus(0)\n\tuser.arrayMetadata('retaState').forEach(function(state) {user.removeState(parseInt(state))})\n</Custom Remove Effect>\n",
     "overlay": 0,
     "priority": 99,
     "removeAtBattleEnd": true,
