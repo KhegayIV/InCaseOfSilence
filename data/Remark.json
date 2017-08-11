@@ -1,37 +1,45 @@
 {
-	"default": {
-		"cooldown": "5",
-		"weight": "1",
-		"roles": {
-			"Liam": "Liam[0]",
-			"Oskar": "Oskar[0]",
-			"Kiera": {
-				"default": "Kiera[0]",
-				"happy": "Kiera[1]",
-				"evil": "Kiera[3]"
-			},
-			"Alexis": {
-				"default": "Alexis[0]",
-				"happy": "Alexis[2]",
-				"sad": "Alexis[6]"
-			}
-		}
-	},
-
-	"sample": [{
-			"requirement": {
-				"+actors": [1, 2, 3],
-				"-actors": [4],
-				"tags": ["test"],
-				"custom": "v[1] > 0"
-			},
-			"lines": [
-				"Liam: Test test test",
-				"Kiera: Test",
-				"Alexis: Test Test",
-				"Alexis.happy: Test!",
-				"Oskar: Why I'm not here?"
-			]
-		}
-	]
+  "default": {
+    "cooldown": "5",
+    "weight": "1",
+    "roles": {
+      "Liam": "Liam[0]",
+      "Oskar": "Oskar[0]",
+      "Kiera": {
+        "default": "Kiera[0]",
+        "happy": "Kiera[1]",
+        "evil": "Kiera[3]"
+      },
+      "Alexis": {
+        "default": "Alexis[0]",
+        "happy": "Alexis[2]",
+        "sad": "Alexis[6]"
+      }
+    }
+  },
+  "sample": [
+    {
+      "requirement": {
+        "+actors": [
+          1,
+          2,
+          3
+        ],
+        "-actors": [
+          4
+        ],
+        "tags": [
+          "test"
+        ],
+        "custom": "v[1] > 0"
+      },
+      "lines": [
+        "Liam: Test test test",
+        "Kiera: Test",
+        "Alexis: Test Test",
+        "Alexis.happy: Test!",
+        "Oskar: Why I'm not here?"
+      ]
+    }
+  ]
 }

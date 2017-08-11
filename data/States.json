@@ -27,18 +27,18 @@
   },
   {
     "id": 2,
-    "autoRemovalTiming": 2,
+    "autoRemovalTiming": 1,
     "chanceByDamage": 100,
     "description": "",
     "iconIndex": 0,
-    "maxTurns": 1,
+    "maxTurns": 2,
     "message1": "",
     "message2": "",
     "message3": "",
     "message4": "",
-    "minTurns": 1,
+    "minTurns": 2,
     "motion": 0,
-    "name": "Guard",
+    "name": "Skip",
     "note": "",
     "overlay": 0,
     "priority": 0,
@@ -50,9 +50,9 @@
     "stepsToRemove": 100,
     "traits": [
       {
-        "code": 62,
-        "dataId": 1,
-        "value": 0
+        "code": 21,
+        "dataId": 6,
+        "value": 1.5
       }
     ]
   },
@@ -113,7 +113,7 @@
   },
   {
     "id": 5,
-    "autoRemovalTiming": 1,
+    "autoRemovalTiming": 2,
     "chanceByDamage": 100,
     "traits": [
       {

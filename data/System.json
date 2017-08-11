@@ -359,7 +359,7 @@
       "Fight",
       "Escape",
       "Attack",
-      "Guard",
+      "Skip",
       "Item",
       "Skill",
       "Equip",
@@ -527,7 +527,7 @@
     "",
     ""
   ],
-  "versionId": 94930875,
+  "versionId": 29853205,
   "victoryMe": {
     "name": "Victory1",
     "pan": 0,
