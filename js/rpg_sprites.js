@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_sprites.js v1.3.3
+// rpg_sprites.js v1.5.0
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -1308,7 +1308,7 @@ Sprite_Animation.prototype.loadBitmaps = function() {
 };
 
 Sprite_Animation.prototype.isReady = function() {
-    return ImageManager.isReady();
+    return this._bitmap1 && this._bitmap1.isReady() && this._bitmap2 && this._bitmap2.isReady();
 };
 
 Sprite_Animation.prototype.createSprites = function() {
@@ -1418,14 +1418,18 @@ Sprite_Animation.prototype.updateCellSprite = function(sprite, cell) {
         sprite.setFrame(sx, sy, 192, 192);
         sprite.x = cell[1];
         sprite.y = cell[2];
-        if (this._mirror) {
-            sprite.x *= -1;
-        }
         sprite.rotation = cell[4] * Math.PI / 180;
         sprite.scale.x = cell[3] / 100;
-        if ((cell[5] && !mirror) || (!cell[5] && mirror)) {
+
+        if(cell[5]){
             sprite.scale.x *= -1;
         }
+        if(mirror){
+            sprite.x *= -1;
+            sprite.rotation *= -1;
+            sprite.scale.x *= -1;
+        }
+
         sprite.scale.y = cell[3] / 100;
         sprite.opacity = cell[6];
         sprite.blendMode = cell[7];
@@ -2628,14 +2632,14 @@ Spriteset_Battle.prototype.createEnemies = function() {
     for (var i = 0; i < enemies.length; i++) {
         sprites[i] = new Sprite_Enemy(enemies[i]);
     }
-    sprites.sort(this.EnemySprite.bind(this));
+    sprites.sort(this.compareEnemySprite.bind(this));
     for (var j = 0; j < sprites.length; j++) {
         this._battleField.addChild(sprites[j]);
     }
     this._enemySprites = sprites;
 };
 
-Spriteset_Battle.prototype.EnemySprite = function(a, b) {
+Spriteset_Battle.prototype.compareEnemySprite = function(a, b) {
     if (a.y !== b.y) {
         return a.y - b.y;
     } else {

@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_objects.js v1.3.3
+// rpg_objects.js v1.5.0
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -271,6 +271,10 @@ Game_System.prototype.replayWalkingBgm = function() {
     }
 };
 
+Game_System.prototype.saveWalkingBgm2 = function() {
+	this._walkingBgm = $dataMap.bgm;
+};
+
 //-----------------------------------------------------------------------------
 // Game_Timer
 //
@@ -500,9 +504,7 @@ Game_Message.prototype.newPage = function() {
 };
 
 Game_Message.prototype.allText = function() {
-    return this._texts.reduce(function(previousValue, currentValue) {
-        return previousValue + '\n' + currentValue;
-    });
+    return this._texts.join('\n');
 };
 
 //-----------------------------------------------------------------------------
@@ -3976,7 +3978,11 @@ Game_Actor.prototype.forgetSkill = function(skillId) {
 };
 
 Game_Actor.prototype.isLearnedSkill = function(skillId) {
-    return this._skills.contains(skillId) || this.addedSkills().contains(skillId);
+    return this._skills.contains(skillId);
+};
+
+Game_Actor.prototype.hasSkill = function(skillId) {
+    return this.skills().contains($dataSkills[skillId]);
 };
 
 Game_Actor.prototype.changeClass = function(classId, keepExp) {
@@ -4273,6 +4279,19 @@ Game_Actor.prototype.lastCommandSymbol = function() {
 
 Game_Actor.prototype.setLastCommandSymbol = function(symbol) {
     this._lastCommandSymbol = symbol;
+};
+
+Game_Actor.prototype.testEscape = function(item) {
+    return item.effects.some(function(effect, index, ar) {
+        return effect && effect.code === Game_Action.EFFECT_SPECIAL;
+    });
+};
+
+Game_Actor.prototype.meetsUsableItemConditions = function(item) {
+    if ($gameParty.inBattle() && !BattleManager.canEscape() && this.testEscape(item)) {
+        return false;
+    }
+    return Game_BattlerBase.prototype.meetsUsableItemConditions.call(this, item);
 };
 
 //-----------------------------------------------------------------------------
@@ -5786,7 +5805,11 @@ Game_Map.prototype.canvasToMapY = function(y) {
 
 Game_Map.prototype.autoplay = function() {
     if ($dataMap.autoplayBgm) {
-        AudioManager.playBgm($dataMap.bgm);
+        if ($gamePlayer.isInVehicle()) {
+            $gameSystem.saveWalkingBgm2();
+        } else {
+            AudioManager.playBgm($dataMap.bgm);
+        }
     }
     if ($dataMap.autoplayBgs) {
         AudioManager.playBgs($dataMap.bgs);
@@ -7303,7 +7326,6 @@ Game_Character.prototype.findDirectionTo = function(goalX, goalY) {
 
         if (current.x === goalX && current.y === goalY) {
             best = current;
-            goaled = true;
             break;
         }
 
@@ -8796,6 +8818,7 @@ Game_Interpreter.prototype.setup = function(list, eventId) {
     this._mapId = $gameMap.mapId();
     this._eventId = eventId || 0;
     this._list = list;
+    Game_Interpreter.requestImages(list);
 };
 
 Game_Interpreter.prototype.eventId = function() {
@@ -9176,132 +9199,132 @@ Game_Interpreter.prototype.command108 = function() {
 Game_Interpreter.prototype.command111 = function() {
     var result = false;
     switch (this._params[0]) {
-    case 0:  // Switch
-        result = ($gameSwitches.value(this._params[1]) === (this._params[2] === 0));
-        break;
-    case 1:  // Variable
-        var value1 = $gameVariables.value(this._params[1]);
-        var value2;
-        if (this._params[2] === 0) {
-            value2 = this._params[3];
-        } else {
-            value2 = $gameVariables.value(this._params[3]);
-        }
-        switch (this._params[4]) {
-        case 0:  // Equal to
-            result = (value1 === value2);
+        case 0:  // Switch
+            result = ($gameSwitches.value(this._params[1]) === (this._params[2] === 0));
             break;
-        case 1:  // Greater than or Equal to
-            result = (value1 >= value2);
-            break;
-        case 2:  // Less than or Equal to
-            result = (value1 <= value2);
-            break;
-        case 3:  // Greater than
-            result = (value1 > value2);
-            break;
-        case 4:  // Less than
-            result = (value1 < value2);
-            break;
-        case 5:  // Not Equal to
-            result = (value1 !== value2);
-            break;
-        }
-        break;
-    case 2:  // Self Switch
-        if (this._eventId > 0) {
-            var key = [this._mapId, this._eventId, this._params[1]];
-            result = ($gameSelfSwitches.value(key) === (this._params[2] === 0));
-        }
-        break;
-    case 3:  // Timer
-        if ($gameTimer.isWorking()) {
+        case 1:  // Variable
+            var value1 = $gameVariables.value(this._params[1]);
+            var value2;
             if (this._params[2] === 0) {
-                result = ($gameTimer.seconds() >= this._params[1]);
+                value2 = this._params[3];
             } else {
-                result = ($gameTimer.seconds() <= this._params[1]);
+                value2 = $gameVariables.value(this._params[3]);
             }
-        }
-        break;
-    case 4:  // Actor
-        var actor = $gameActors.actor(this._params[1]);
-        if (actor) {
-            var n = this._params[3];
+            switch (this._params[4]) {
+                case 0:  // Equal to
+                    result = (value1 === value2);
+                    break;
+                case 1:  // Greater than or Equal to
+                    result = (value1 >= value2);
+                    break;
+                case 2:  // Less than or Equal to
+                    result = (value1 <= value2);
+                    break;
+                case 3:  // Greater than
+                    result = (value1 > value2);
+                    break;
+                case 4:  // Less than
+                    result = (value1 < value2);
+                    break;
+                case 5:  // Not Equal to
+                    result = (value1 !== value2);
+                    break;
+            }
+            break;
+        case 2:  // Self Switch
+            if (this._eventId > 0) {
+                var key = [this._mapId, this._eventId, this._params[1]];
+                result = ($gameSelfSwitches.value(key) === (this._params[2] === 0));
+            }
+            break;
+        case 3:  // Timer
+            if ($gameTimer.isWorking()) {
+                if (this._params[2] === 0) {
+                    result = ($gameTimer.seconds() >= this._params[1]);
+                } else {
+                    result = ($gameTimer.seconds() <= this._params[1]);
+                }
+            }
+            break;
+        case 4:  // Actor
+            var actor = $gameActors.actor(this._params[1]);
+            if (actor) {
+                var n = this._params[3];
+                switch (this._params[2]) {
+                    case 0:  // In the Party
+                        result = $gameParty.members().contains(actor);
+                        break;
+                    case 1:  // Name
+                        result = (actor.name() === n);
+                        break;
+                    case 2:  // Class
+                        result = actor.isClass($dataClasses[n]);
+                        break;
+                    case 3:  // Skill
+                        result = actor.hasSkill(n);
+                        break;
+                    case 4:  // Weapon
+                        result = actor.hasWeapon($dataWeapons[n]);
+                        break;
+                    case 5:  // Armor
+                        result = actor.hasArmor($dataArmors[n]);
+                        break;
+                    case 6:  // State
+                        result = actor.isStateAffected(n);
+                        break;
+                }
+            }
+            break;
+        case 5:  // Enemy
+            var enemy = $gameTroop.members()[this._params[1]];
+            if (enemy) {
+                switch (this._params[2]) {
+                    case 0:  // Appeared
+                        result = enemy.isAlive();
+                        break;
+                    case 1:  // State
+                        result = enemy.isStateAffected(this._params[3]);
+                        break;
+                }
+            }
+            break;
+        case 6:  // Character
+            var character = this.character(this._params[1]);
+            if (character) {
+                result = (character.direction() === this._params[2]);
+            }
+            break;
+        case 7:  // Gold
             switch (this._params[2]) {
-            case 0:  // In the Party
-                result = $gameParty.members().contains(actor);
-                break;
-            case 1:  // Name
-                result = (actor.name() === n);
-                break;
-            case 2:  // Class
-                result = actor.isClass($dataClasses[n]);
-                break;
-            case 3:  // Skill
-                result = actor.isLearnedSkill(n);
-                break;
-            case 4:  // Weapon
-                result = actor.hasWeapon($dataWeapons[n]);
-                break;
-            case 5:  // Armor
-                result = actor.hasArmor($dataArmors[n]);
-                break;
-            case 6:  // State
-                result = actor.isStateAffected(n);
-                break;
+                case 0:  // Greater than or equal to
+                    result = ($gameParty.gold() >= this._params[1]);
+                    break;
+                case 1:  // Less than or equal to
+                    result = ($gameParty.gold() <= this._params[1]);
+                    break;
+                case 2:  // Less than
+                    result = ($gameParty.gold() < this._params[1]);
+                    break;
             }
-        }
-        break;
-    case 5:  // Enemy
-        var enemy = $gameTroop.members()[this._params[1]];
-        if (enemy) {
-            switch (this._params[2]) {
-            case 0:  // Appeared
-                result = enemy.isAlive();
-                break;
-            case 1:  // State
-                result = enemy.isStateAffected(this._params[3]);
-                break;
-            }
-        }
-        break;
-    case 6:  // Character
-        var character = this.character(this._params[1]);
-        if (character) {
-            result = (character.direction() === this._params[2]);
-        }
-        break;
-    case 7:  // Gold
-        switch (this._params[2]) {
-        case 0:  // Greater than or equal to
-            result = ($gameParty.gold() >= this._params[1]);
             break;
-        case 1:  // Less than or equal to
-            result = ($gameParty.gold() <= this._params[1]);
+        case 8:  // Item
+            result = $gameParty.hasItem($dataItems[this._params[1]]);
             break;
-        case 2:  // Less than
-            result = ($gameParty.gold() < this._params[1]);
+        case 9:  // Weapon
+            result = $gameParty.hasItem($dataWeapons[this._params[1]], this._params[2]);
             break;
-        }
-        break;
-    case 8:  // Item
-        result = $gameParty.hasItem($dataItems[this._params[1]]);
-        break;
-    case 9:  // Weapon
-        result = $gameParty.hasItem($dataWeapons[this._params[1]], this._params[2]);
-        break;
-    case 10:  // Armor
-        result = $gameParty.hasItem($dataArmors[this._params[1]], this._params[2]);
-        break;
-    case 11:  // Button
-        result = Input.isPressed(this._params[1]);
-        break;
-    case 12:  // Script
-        result = !!eval(this._params[1]);
-        break;
-    case 13:  // Vehicle
-        result = ($gamePlayer.vehicle() === $gameMap.vehicle(this._params[1]));
-        break;
+        case 10:  // Armor
+            result = $gameParty.hasItem($dataArmors[this._params[1]], this._params[2]);
+            break;
+        case 11:  // Button
+            result = Input.isPressed(this._params[1]);
+            break;
+        case 12:  // Script
+            result = !!eval(this._params[1]);
+            break;
+        case 13:  // Vehicle
+            result = ($gamePlayer.vehicle() === $gameMap.vehicle(this._params[1]));
+            break;
     }
     this._branch[this._indent] = result;
     if (this._branch[this._indent] === false) {
@@ -10044,11 +10067,19 @@ Game_Interpreter.prototype.command281 = function() {
 // Change Tileset
 Game_Interpreter.prototype.command282 = function() {
     var tileset = $dataTilesets[this._params[0]];
-    for (var i = 0; i < tileset.tilesetNames.length; i++) {
-        ImageManager.loadTileset(tileset.tilesetNames[i]);
+    if(!this._imageReservationId){
+        this._imageReservationId = Utils.generateRuntimeId();
     }
-    if (ImageManager.isReady()) {
+
+    var allReady = tileset.tilesetNames.map(function(tilesetName) {
+        return ImageManager.reserveTileset(tilesetName, 0, this._imageReservationId);
+    }, this).every(function(bitmap) {return bitmap.isReady();});
+
+    if (allReady) {
         $gameMap.changeTileset(this._params[0]);
+        ImageManager.releaseReservation(this._imageReservationId);
+        this._imageReservationId = null;
+
         return true;
     } else {
         return false;
@@ -10486,46 +10517,171 @@ Game_Interpreter.prototype.pluginCommand = function(command, args) {
     // to be overridden by plugins
 };
 
+Game_Interpreter.requestImages = function(list, commonList){
+    if(!list) return;
 
-// -----------------------------------------------
-// CHANGED (ADD)
+    list.forEach(function(command){
+        var params = command.parameters;
+        switch(command.code){
+            // Show Text
+            case 101:
+                ImageManager.requestFace(params[0]);
+                break;
 
-Game_Battler.prototype.reduceMetadata = function(key, reduceFunc, initial) {
-	return undefined;
+            // Common Event
+            case 117:
+                var commonEvent = $dataCommonEvents[params[0]];
+                if (commonEvent) {
+                    if (!commonList) {
+                        commonList = [];
+                    }
+                    if (!commonList.contains(params[0])) {
+                        commonList.push(params[0]);
+                        Game_Interpreter.requestImages(commonEvent.list, commonList);
+                    }
+                }
+                break;
+
+            // Change Party Member
+            case 129:
+                var actor = $gameActors.actor(params[0]);
+                if (actor && params[1] === 0) {
+                    var name = actor.characterName();
+                    ImageManager.requestCharacter(name);
+                }
+                break;
+
+            // Set Movement Route
+            case 205:
+                if(params[1]){
+                    params[1].list.forEach(function(command){
+                        var params = command.parameters;
+                        if(command.code === Game_Character.ROUTE_CHANGE_IMAGE){
+                            ImageManager.requestCharacter(params[0]);
+                        }
+                    });
+                }
+                break;
+
+            // Show Animation, Show Battle Animation
+            case 212: case 337:
+                if(params[1]) {
+                    var animation = $dataAnimations[params[1]];
+                    var name1 = animation.animation1Name;
+                    var name2 = animation.animation2Name;
+                    var hue1 = animation.animation1Hue;
+                    var hue2 = animation.animation2Hue;
+                    ImageManager.requestAnimation(name1, hue1);
+                    ImageManager.requestAnimation(name2, hue2);
+                }
+                break;
+
+            // Change Player Followers
+            case 216:
+                if (params[0] === 0) {
+                    $gamePlayer.followers().forEach(function(follower) {
+                        var name = follower.characterName();
+                        ImageManager.requestCharacter(name);
+                    });
+                }
+                break;
+
+            // Show Picture
+            case 231:
+                ImageManager.requestPicture(params[1]);
+                break;
+
+            // Change Tileset
+            case 282:
+                var tileset = $dataTilesets[params[0]];
+                tileset.tilesetNames.forEach(function(tilesetName){
+                    ImageManager.requestTileset(tilesetName);
+                });
+                break;
+
+            // Change Battle Back
+            case 283:
+                if ($gameParty.inBattle()) {
+                    ImageManager.requestBattleback1(params[0]);
+                    ImageManager.requestBattleback2(params[1]);
+                }
+                break;
+
+            // Change Parallax
+            case 284:
+                if (!$gameParty.inBattle()) {
+                    ImageManager.requestParallax(params[0]);
+                }
+                break;
+
+            // Change Actor Images
+            case 322:
+                ImageManager.requestCharacter(params[1]);
+                ImageManager.requestFace(params[3]);
+                ImageManager.requestSvActor(params[5]);
+                break;
+
+            // Change Vehicle Image
+            case 323:
+                var vehicle = $gameMap.vehicle(params[0]);
+                if(vehicle){
+                    ImageManager.requestCharacter(params[1]);
+                }
+                break;
+
+            // Enemy Transform
+            case 336:
+                var enemy = $dataEnemies[params[1]];
+                var name = enemy.battlerName;
+                var hue = enemy.battlerHue;
+                if ($gameSystem.isSideView()) {
+                    ImageManager.requestSvEnemy(name, hue);
+                } else {
+                    ImageManager.requestEnemy(name, hue);
+                }
+                break;
+        }
+    });
+};
+
+// ----------------------------------------------- 
+// CHANGED (ADD) 
+
+Game_Battler.prototype.reduceMetadata = function(key, reduceFunc, initial) { 
+  return undefined; 
+} 
+
+Game_Battler.prototype.sumMetadata = function(key) { 
+  return this.reduceMetadata(key, function(a,b){return a+parseInt(b)}, 0); 
+} 
+
+Game_Battler.prototype.arrayMetadata = function(key) { 
+  return this.reduceMetadata(key, function(a,b){return a.concat(b)}, []); 
+} 
+
+Game_Actor.prototype.reduceMetadata = function(key, reduceFunc, initial) { 
+  var equipsMeta = this._equips.map(function(slot) { 
+    var item = slot._item.object(); 
+    if (item){ 
+      return item.meta[key] 
+    } else { 
+      return null; 
+    } 
+  }) 
+  var statesMeta = this._states.map(function(state) {return $dataStates[state].meta[key]}) 
+  var arr = [this.actor().meta[key], this.currentClass().meta[key]] 
+    .concat(equipsMeta, statesMeta) 
+    .filter(function(it){return it}) 
+    .map(function(it){return it.trim()}) 
+  return arr.reduce(reduceFunc, initial); 
+} 
+
+Game_Enemy.prototype.reduceMetadata = function(key, reduceFunc, initial) { 
+  var statesMeta = this._states.map(function(state) {return $dataStates[state].meta[key]}) 
+  return [this.enemy().meta[key]] 
+    .concat(statesMeta) 
+    .filter(function(it){return it}) 
+    .map(function(it){return it.trim()}) 
+    .reduce(reduceFunc, initial); 
 }
 
-Game_Battler.prototype.sumMetadata = function(key) {
-	return this.reduceMetadata(key, function(a,b){return a+parseInt(b)}, 0);
-}
-
-
-Game_Battler.prototype.arrayMetadata = function(key) {
-	return this.reduceMetadata(key, function(a,b){return a.concat(b)}, []);
-}
-
-
-Game_Actor.prototype.reduceMetadata = function(key, reduceFunc, initial) {
-	var equipsMeta = this._equips.map(function(slot) {
-		var item = slot._item.object();
-		if (item){
-			return item.meta[key]
-		} else {
-			return null;
-		}
-	})
-	var statesMeta = this._states.map(function(state) {return $dataStates[state].meta[key]})
-	var arr = [this.actor().meta[key], this.currentClass().meta[key]]
-		.concat(equipsMeta, statesMeta)
-		.filter(function(it){return it})
-		.map(function(it){return it.trim()})
-	return arr.reduce(reduceFunc, initial);
-}
-
-Game_Enemy.prototype.reduceMetadata = function(key, reduceFunc, initial) {
-	var statesMeta = this._states.map(function(state) {return $dataStates[state].meta[key]})
-	return [this.enemy().meta[key]]
-		.concat(statesMeta)
-		.filter(function(it){return it})
-		.map(function(it){return it.trim()})
-		.reduce(reduceFunc, initial);
-}
