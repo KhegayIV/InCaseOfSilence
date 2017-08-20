@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_core.js v1.5.0
+// rpg_core.js v1.5.0 - Yanfly Version Update
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -181,6 +181,7 @@ Utils.RPGMAKER_NAME = 'MV';
  * @final
  */
 Utils.RPGMAKER_VERSION = "1.5.0";
+Utils.RPGMAKER_VERSION.Yanfly = true;
 
 /**
  * Checks whether the option is in the query string.

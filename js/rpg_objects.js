@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_objects.js v1.5.0
+// rpg_objects.js v1.5.0 - Yanfly Version Update
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -272,7 +272,7 @@ Game_System.prototype.replayWalkingBgm = function() {
 };
 
 Game_System.prototype.saveWalkingBgm2 = function() {
-	this._walkingBgm = $dataMap.bgm;
+  this._walkingBgm = $dataMap.bgm;
 };
 
 //-----------------------------------------------------------------------------
@@ -504,7 +504,9 @@ Game_Message.prototype.newPage = function() {
 };
 
 Game_Message.prototype.allText = function() {
-    return this._texts.join('\n');
+    return this._texts.reduce(function(previousValue, currentValue) {
+        return previousValue + '\n' + currentValue;
+    });
 };
 
 //-----------------------------------------------------------------------------
@@ -7326,6 +7328,7 @@ Game_Character.prototype.findDirectionTo = function(goalX, goalY) {
 
         if (current.x === goalX && current.y === goalY) {
             best = current;
+            goaled = true;
             break;
         }
 
@@ -10067,19 +10070,11 @@ Game_Interpreter.prototype.command281 = function() {
 // Change Tileset
 Game_Interpreter.prototype.command282 = function() {
     var tileset = $dataTilesets[this._params[0]];
-    if(!this._imageReservationId){
-        this._imageReservationId = Utils.generateRuntimeId();
+    for (var i = 0; i < tileset.tilesetNames.length; i++) {
+        ImageManager.loadTileset(tileset.tilesetNames[i]);
     }
-
-    var allReady = tileset.tilesetNames.map(function(tilesetName) {
-        return ImageManager.reserveTileset(tilesetName, 0, this._imageReservationId);
-    }, this).every(function(bitmap) {return bitmap.isReady();});
-
-    if (allReady) {
+    if (ImageManager.isReady()) {
         $gameMap.changeTileset(this._params[0]);
-        ImageManager.releaseReservation(this._imageReservationId);
-        this._imageReservationId = null;
-
         return true;
     } else {
         return false;

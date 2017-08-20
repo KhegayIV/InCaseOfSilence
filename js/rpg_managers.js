@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_managers.js v1.5.0
+// rpg_managers.js v1.5.0 - Yanfly Version Update
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ DataManager.loadDataFile = function(name, src) {
             DataManager.onLoad(window[name]);
         }
     };
-    xhr.onerror = this._mapLoader || function() {
+    xhr.onerror = function() {
         DataManager._errorUrl = DataManager._errorUrl || url;
     };
     window[name] = null;
@@ -106,7 +106,8 @@ DataManager.isDatabaseLoaded = function() {
 DataManager.loadMapData = function(mapId) {
     if (mapId > 0) {
         var filename = 'Map%1.json'.format(mapId.padZero(3));
-        this._mapLoader = ResourceHandler.createLoader('data/' + filename, this.loadDataFile.bind(this, '$dataMap', filename));
+        this._mapLoader = ResourceHandler.createLoader('data/' + filename,
+          this.loadDataFile.bind(this, '$dataMap', filename));
         this.loadDataFile('$dataMap', filename);
     } else {
         this.makeEmptyMap();
@@ -320,12 +321,12 @@ DataManager.loadAllSavefileImages = function() {
 DataManager.loadSavefileImages = function(info) {
     if (info.characters) {
         for (var i = 0; i < info.characters.length; i++) {
-            ImageManager.reserveCharacter(info.characters[i][0]);
+            ImageManager.loadCharacter(info.characters[i][0]);
         }
     }
     if (info.faces) {
         for (var j = 0; j < info.faces.length; j++) {
-            ImageManager.reserveFace(info.faces[j][0]);
+            ImageManager.loadFace(info.faces[j][0]);
         }
     }
 };
@@ -796,10 +797,6 @@ ImageManager._imageCache = new ImageCache();
 ImageManager._requestQueue = new RequestQueue();
 ImageManager._systemReservationId = Utils.generateRuntimeId();
 
-ImageManager._generateCacheKey = function(path, hue){
-    return  path + ':' + hue;
-};
-
 ImageManager.loadAnimation = function(filename, hue) {
     return this.loadBitmap('img/animations/', filename, hue, true);
 };
@@ -868,38 +865,42 @@ ImageManager.loadBitmap = function(folder, filename, hue, smooth) {
 };
 
 ImageManager.loadEmptyBitmap = function() {
-    var empty = this._imageCache.get('empty');
-    if(!empty){
+    var empty = this.cache.getItem('empty');
+    if (!empty) {
         empty = new Bitmap();
-        this._imageCache.add('empty', empty);
-        this._imageCache.reserve('empty', empty, this._systemReservationId);
+        this.cache.setItem('empty', empty);
     }
-
     return empty;
 };
 
 ImageManager.loadNormalBitmap = function(path, hue) {
-    var key = this._generateCacheKey(path, hue);
-    var bitmap = this._imageCache.get(key);
+    var key = path + ':' + hue;
+    var bitmap = this.cache.getItem(key);
     if (!bitmap) {
         bitmap = Bitmap.load(path);
         bitmap.addLoadListener(function() {
             bitmap.rotateHue(hue);
         });
-        this._imageCache.add(key, bitmap);
-    }else if(!bitmap.isReady()){
-        bitmap.decode();
+        this.cache.setItem(key, bitmap);
     }
-
     return bitmap;
 };
 
 ImageManager.clear = function() {
-    this._imageCache = new ImageCache();
+    this.cache.clear();
 };
 
 ImageManager.isReady = function() {
-    return this._imageCache.isReady();
+    for (var key in this.cache._inner) {
+        var bitmap = this.cache._inner[key].item;
+        if (bitmap.isError()) {
+            throw new Error('Failed to load: ' + bitmap.url);
+        }
+        if (!bitmap.isReady()) {
+            return false;
+        }
+    }
+    return true;
 };
 
 ImageManager.isObjectCharacter = function(filename) {
@@ -915,7 +916,6 @@ ImageManager.isBigCharacter = function(filename) {
 ImageManager.isZeroParallax = function(filename) {
     return filename.charAt(0) === '!';
 };
-
 
 ImageManager.reserveAnimation = function(filename, hue, reservationId) {
     return this.reserveBitmap('img/animations/', filename, hue, true, reservationId);
@@ -1774,10 +1774,10 @@ function SceneManager() {
 }
 
 /*
- * Gets the current time in ms without on iOS Safari.
+ * Gets the current time in ms.
  * @private
  */
-SceneManager._getTimeInMsWithoutMobileSafari = function() {
+SceneManager._getTimeInMs = function() {
     return performance.now();
 };
 
@@ -1794,7 +1794,7 @@ SceneManager._screenHeight      = 624;
 SceneManager._boxWidth          = 816;
 SceneManager._boxHeight         = 624;
 SceneManager._deltaTime = 1.0 / 60.0;
-if (!Utils.isMobileSafari()) SceneManager._currentTime = SceneManager._getTimeInMsWithoutMobileSafari();
+SceneManager._currentTime = SceneManager._getTimeInMs();
 SceneManager._accumulator = 0.0;
 
 SceneManager.run = function(sceneClass) {
@@ -1836,6 +1836,8 @@ SceneManager.preferableRendererType = function() {
         return 'canvas';
     } else if (Utils.isOptionValid('webgl')) {
         return 'webgl';
+    } else if (this.shouldUseCanvasRenderer()) {
+        return 'canvas';
     } else {
         return 'auto';
     }
@@ -1903,7 +1905,6 @@ SceneManager.update = function() {
         if (Utils.isMobileSafari()) {
             this.updateInputData();
         }
-        this.updateManagers();
         this.updateMain();
         this.tickEnd();
     } catch (e) {
@@ -1972,7 +1973,7 @@ SceneManager.updateMain = function() {
         this.changeScene();
         this.updateScene();
     } else {
-        var newTime = this._getTimeInMsWithoutMobileSafari();
+        var newTime = this._getTimeInMs();
         var fTime = (newTime - this._currentTime) / 1000;
         if (fTime > 0.25) fTime = 0.25;
         this._currentTime = newTime;
@@ -1988,20 +1989,18 @@ SceneManager.updateMain = function() {
     this.requestUpdate();
 };
 
-SceneManager.updateManagers = function() {
-    ImageManager.update();
+SceneManager.updateManagers = function(ticks, delta) {
+    ImageManager.cache.update(ticks, delta);
 };
 
 SceneManager.changeScene = function() {
     if (this.isSceneChanging() && !this.isCurrentSceneBusy()) {
         if (this._scene) {
             this._scene.terminate();
-            this._scene.detachReservation();
             this._previousClass = this._scene.constructor;
         }
         this._scene = this._nextScene;
         if (this._scene) {
-            this._scene.attachReservation();
             this._scene.create();
             this._nextScene = null;
             this._sceneStarted = false;
@@ -2116,15 +2115,6 @@ SceneManager.snapForBackground = function() {
 
 SceneManager.backgroundBitmap = function() {
     return this._backgroundBitmap;
-};
-
-SceneManager.resume = function() {
-    this._stopped = false;
-    this.requestUpdate();
-    if (!Utils.isMobileSafari()) {
-        this._currentTime = this._getTimeInMsWithoutMobileSafari();
-        this._accumulator = 0;
-    }
 };
 
 //-----------------------------------------------------------------------------
