@@ -2848,11 +2848,11 @@ Game_BattlerBase.prototype.canGuard = function() {
 // ---
 
 Game_BattlerBase.prototype.randomizeActionSpeed = function() {
-	this._speedAdd = Math.floor(this.agi * (0.25 - Math.random()*0.5));
+	this._speedAdd = 50 + Math.floor(Math.random()*100);
 }
 
 Game_BattlerBase.prototype.randomizedSpeed = function() {
-	this._speedAdd = this._speedAdd || 0;
+	this._speedAdd = this._speedAdd || 100;
 	return this.agi + this._speedAdd;
 };
 // ---

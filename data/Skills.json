@@ -85,21 +85,14 @@
       "variance": 20
     },
     "description": "",
-    "effects": [
-      {
-        "code": 21,
-        "dataId": 8,
-        "value1": 1,
-        "value2": 0
-      }
-    ],
+    "effects": [],
     "hitType": 0,
     "iconIndex": 0,
     "message1": "",
     "message2": "",
     "mpCost": 0,
     "name": "Prepare",
-    "note": "<Instant>\n<EQS ignore>\n\n<Custom Execution>\nuser.addState(5)\n</Custom Execution>",
+    "note": "<Instant>\n<EQS ignore>\n\n<Custom Execution>\nuser.addState(8)\n</Custom Execution>",
     "occasion": 0,
     "repeats": 1,
     "requiredWtypeId1": 0,
@@ -122,21 +115,14 @@
       "variance": 20
     },
     "description": "",
-    "effects": [
-      {
-        "code": 22,
-        "dataId": 8,
-        "value1": 1,
-        "value2": 0
-      }
-    ],
+    "effects": [],
     "hitType": 0,
     "iconIndex": 0,
     "message1": "",
     "message2": "",
     "mpCost": 0,
     "name": "Hurry up",
-    "note": "<Instant>\n\n<Custom Execution>\nuser.removeState(5)\n</Custom Execution>",
+    "note": "<Instant>\n\n<Custom Execution>\nuser.removeState(8)\n</Custom Execution>",
     "occasion": 0,
     "repeats": 1,
     "requiredWtypeId1": 0,

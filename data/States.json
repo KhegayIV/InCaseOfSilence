@@ -172,7 +172,7 @@
     "minTurns": 2,
     "motion": 0,
     "name": "Skip",
-    "note": "",
+    "note": "<agi Plus: +50>",
     "overlay": 0,
     "priority": 0,
     "removeAtBattleEnd": true,
@@ -181,13 +181,7 @@
     "removeByWalking": false,
     "restriction": 0,
     "stepsToRemove": 100,
-    "traits": [
-      {
-        "code": 21,
-        "dataId": 6,
-        "value": 1.5
-      }
-    ]
+    "traits": []
   },
   {
     "id": 8,
@@ -202,11 +196,6 @@
       {
         "code": 21,
         "dataId": 6,
-        "value": 0.5
-      },
-      {
-        "code": 21,
-        "dataId": 3,
         "value": 0.5
       },
       {
@@ -229,7 +218,7 @@
     "minTurns": 1,
     "motion": 0,
     "name": "Waiting",
-    "note": "",
+    "note": "<agi Plus: -50>",
     "overlay": 0,
     "priority": 50,
     "removeAtBattleEnd": true,
