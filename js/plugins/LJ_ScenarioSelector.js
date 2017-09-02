@@ -3,7 +3,8 @@
  * @author L'James
  */
 
-
+var LJ = LJ || {};
+LJ.Scenario = LJ.Scenario || {};
 var $ljScenarioCooldowns = $ljScenarioCooldowns || {};
 var $ljScenarios = $ljScenarios || {};
  
@@ -235,5 +236,15 @@ Scenario.checkCondition = function(obj, tags){
 	return eval(obj.condition)
 }
 
+LJ.Scenario.DataManager_makeSaveContents = DataManager.makeSaveContents;
+DataManager.makeSaveContents = function() {
+    var contents = LJ.Scenario.DataManager_makeSaveContents.call(this);
+    contents.ljScenarioCooldowns = $ljScenarioCooldowns
+    return contents;
+};
 
-Scenario.create('Remark')
+LJ.Scenario.DataManager_extractSaveContents = DataManager.extractSaveContents;
+DataManager.extractSaveContents = function(contents) {
+    LJ.Scenario.DataManager_extractSaveContents.call(this, contents);
+    $ljScenarioCooldowns = contents.ljScenarioCooldowns || {};
+};
