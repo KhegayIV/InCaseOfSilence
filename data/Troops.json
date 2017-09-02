@@ -54,6 +54,71 @@
             ]
           },
           {
+            "code": 121,
+            "indent": 0,
+            "parameters": [
+              2,
+              2,
+              0
+            ]
+          },
+          {
+            "code": 355,
+            "indent": 0,
+            "parameters": [
+              "var s = Scenario.get('Remark')"
+            ]
+          },
+          {
+            "code": 655,
+            "indent": 0,
+            "parameters": [
+              "console.log(s.select(\"test\", \"test.test2\"))"
+            ]
+          },
+          {
+            "code": 655,
+            "indent": 0,
+            "parameters": [
+              "console.log(s.select(\"test\", \"test.test2\"))"
+            ]
+          },
+          {
+            "code": 655,
+            "indent": 0,
+            "parameters": [
+              "console.log(s.select(\"test\", \"test.test2\"))"
+            ]
+          },
+          {
+            "code": 655,
+            "indent": 0,
+            "parameters": [
+              "console.log(s.select(\"test\", \"test.test2\"))"
+            ]
+          },
+          {
+            "code": 655,
+            "indent": 0,
+            "parameters": [
+              "console.log(s.select(\"test\", \"test.test2\"))"
+            ]
+          },
+          {
+            "code": 655,
+            "indent": 0,
+            "parameters": [
+              "console.log(s.select(\"test\", \"test.test2\"))"
+            ]
+          },
+          {
+            "code": 655,
+            "indent": 0,
+            "parameters": [
+              "console.log(s.select(\"test\", \"test.test2\"))"
+            ]
+          },
+          {
             "code": 0,
             "indent": 0,
             "parameters": []

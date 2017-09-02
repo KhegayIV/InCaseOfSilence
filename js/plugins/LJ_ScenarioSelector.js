@@ -1,42 +1,62 @@
-// --------------------
-//
+/*:
+ * @plugindesc Base for other scripts that need random selector with weights and cooldowns
+ * @author L'James
+ */
 
-var $ljScenarioCooldowns = $ljScenarioCooldowns | {};
 
+var $ljScenarioCooldowns = $ljScenarioCooldowns || {};
+var $ljScenarios = $ljScenarios || {};
+ 
 function Scenario() {
 	this.initialize.apply(this, arguments)	
 }
 
 Scenario.prototype.initialize = function(file) {
 	this._file = file
-	loadFile(file)
-	$ljScenarioCooldowns[this._file] = $ljScenarioCooldowns[this._file] | {}
+	this.loadFile(file)
+	$ljScenarioCooldowns[this._file] = $ljScenarioCooldowns[this._file] || {}
+}
+
+Scenario.get = function(name) {
+	return $ljScenarios[name];
+}
+
+Scenario.create = function(name, file) {
+	if (!file) {
+		file = "data/"+name+".json";
+	}
+	$ljScenarios[name] =  new Scenario(file);
+}
+
+Scenario.prototype.onLoad = function(object) {
+	this._source = this.parseFile(object);
 }
 
 Scenario.prototype.loadFile = function(file, onLoad) {
+	var self = this;
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', file);
 	xhr.overrideMimeType('application/json');
 	xhr.onload = function() {
 		if (xhr.status < 400) {
-			this.onLoad(JSON.parse(xhr.responseText));
+			self.onLoad(JSON.parse(xhr.responseText));
 		}
 	};
 	xhr.onerror = function() { throw new Error("There was an error loading the file '" + file + "'."); };
 	xhr.send();
 };
 
-Scenario.prototype.onLoad = function(object) {
-	this._source = parseFile(object);
-}
+
 
 Scenario.prototype.parseFile = function(object) {
 	var result = {};
 	
 	var findInArr = function(arr, getter) {
-		var item = arr.slice(0).reverse().find(function(v) {return getter(v) !== undefined});
-		if (item !== undefined) {
-			return getter(item);
+		for (var i = arr.length - 1; i >= 0; --i) {
+			var item = arr[i];
+			if (getter(item) !== undefined) {
+				return getter(item);
+			}
 		}
 	}
 	
@@ -90,19 +110,26 @@ Scenario.prototype.parseFile = function(object) {
 	}
 	
 	var parseItem = function(object, defaults) {
-		var arr = defaults.concat(object);
+		var ikey;
+		var arr;
+		if (!object) {
+			ikey = null;
+			arr = defaults;
+		} else if (typeof object === "string") {
+			ikey = object;
+			arr = defaults;
+		} else {
+			ikey = object["key"];
+			arr = defaults.concat(object);
+		}
 		var item = {
+			key: ikey,
 			weight : findInArr(arr, function(it) {return it.weight}) || 1,
 			cooldown : findInArr(arr, function(it) {return it.cooldown}) || 0,
 			ignoreDisabled : findInArr(arr, function(it) {return it.ignoreDisabled}) || false,
 			condition: arr.map(function(it) {return parseCondition(it.condition, "and")})
-				.filter(function(it) {return it}).join(" && ") | "true"
+				.filter(function(it) {return it}).join(" && ") || "true"
 		};
-		if (typeof object === "string") {
-			item["key"] = object;
-		} else {
-			item.key = object["key"];
-		}
 		return item;
 	}
 	
@@ -135,7 +162,7 @@ Scenario.prototype.select = function() {
 	return this.selectWithTags([], Array.prototype.slice.call(arguments));
 }
 
-Scenario.prototype.tags(){
+Scenario.prototype.tags = function(){
 	return {
 		scenario: this,
 		tagList: Array.prototype.slice.call(arguments),
@@ -154,34 +181,43 @@ Scenario.prototype.selectWithTags = function(tags, keys) {
 	var options = [];
 	for (var i = 0; i < keys.length; ++i) {
 		var key = keys[i];
-		$ljScenarioCooldowns[this._file][key] = $ljScenarioCooldowns[this._file][key] | []
+		$ljScenarioCooldowns[this._file][key] = $ljScenarioCooldowns[this._file][key] || []
 		var cooldowns = $ljScenarioCooldowns[this._file][key]
-		options.push(source[key].map(function(obj, arrIndex) {
+		options = options.concat(source[key].map(function(obj, arrIndex) {
 			var cond = Scenario.checkCondition(obj, tags);
-			var enabled = cond && cooldowns[index] === 0;
-			if (cond && cooldowns[index] > 0) {
-				cooldowns[index] = cooldown[index] - 1;
+			if (!cooldowns[arrIndex]){
+				cooldowns[arrIndex] = 0;
+			}
+			var enabled = cond && (cooldowns[arrIndex] === 0);
+			if (cond && cooldowns[arrIndex] > 0) {
+				cooldowns[arrIndex] = cooldowns[arrIndex] - 1;
 			}
 			return {
 				obj: obj,
-				groupKey: k,
-				groupIndex: index,
+				groupKey: key,
+				groupIndex: arrIndex,
 				enabled: enabled,
 				weight: obj.weight
 			}
 		}));
 	}
+	var active = options.filter(function(opt) {
+		return opt.enabled || !opt.obj.ignoreDisabled});
+		
+	console.log(active)
+	console.log($ljScenarioCooldowns)
 	
-	var active = options.filter(function(opt) {return opt.enabled || !opt.obj.ignoreDisabled});
 	if (active.length === 0) {
 		return null;
 	}
-	var weightSum = active.reduce(function(a,b) {a + b.weight}, 0);
+	var weightSum = active.reduce(function(a,b) {return a + b.weight}, 0);
 	var number = Math.floor(Math.random() * weightSum);
 	var next = 0;
+	console.log(weightSum);
 	for (i = 0; i < active.length; ++i){
 		var cur = active[i];
 		next = next + cur.weight;
+		//console.log(next);
 		if (number < next) {
 			$ljScenarioCooldowns[this._file][cur.groupKey][cur.groupIndex] = cur.obj.cooldown;
 			return cur.enabled ? cur.obj.key : null;
@@ -191,9 +227,13 @@ Scenario.prototype.selectWithTags = function(tags, keys) {
 }
 
 Scenario.checkCondition = function(obj, tags){
-	var a = $gameActors;
-	var s = $gameSwitches;
-	var v = $gameVariables;
+	var a = $gameActors._data;
+	var s = $gameSwitches._data;
+	var v = $gameVariables._data;
 	var party = $gameParty;
+	console.log($gameParty.members().contains(a[1]))
 	return eval(obj.condition)
 }
+
+
+Scenario.create('Remark')
