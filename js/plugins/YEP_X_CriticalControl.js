@@ -8,11 +8,11 @@ Imported.YEP_X_CriticalControl = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Crit = Yanfly.Crit || {};
-Yanfly.Crit.version = 1.04;
+Yanfly.Crit.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 (Requires YEP_DamageCore.js) Control over critical
+ * @plugindesc v1.05 (Requires YEP_DamageCore.js) Control over critical
  * hits have been added.
  * @author Yanfly Engine Plugins
  *
@@ -195,6 +195,9 @@ Yanfly.Crit.version = 1.04;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.04:
  * - Bug fixed where the physical critical modifier replaced the magical
