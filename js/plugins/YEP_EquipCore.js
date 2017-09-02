@@ -791,19 +791,15 @@ Window_StatCompare.prototype.initialize = function(wx, wy, ww, wh) {
     this.refresh();
 };
 
+// UPDATED
 Window_StatCompare.prototype.createWidths = function() {
     this._paramNameWidth = 0;
     this._paramValueWidth = 0;
     this._arrowWidth = this.textWidth('\u2192' + ' ');
     var buffer = this.textWidth(' ');
-	// CHANGED
-    //for (var i = 0; i < 8; ++i) {
-	var stats = this._statsArray;
-	for (var i = 0; i < stats.length; ++i) {
-	  //var value1 = this.textWidth(TextManager.param(i));
-      var value1 = this.textWidth(TextManager.param(stats[i]));
-      //var value2 = this.textWidth(Yanfly.Util.toGroup(this._actor.paramMax(i)));
-	  var value2 = this.textWidth(Yanfly.Util.toGroup(this._actor.paramMax(stats[i])));
+    for (var i = 0; i < 8; ++i) {
+	  var value1 = this.textWidth(TextManager.param(i));
+      var value2 = this.textWidth(Yanfly.Util.toGroup(this._actor.paramMax(i)));
       this._paramNameWidth = Math.max(value1, this._paramNameWidth);
       this._paramValueWidth = Math.max(value2, this._paramValueWidth);
     }
@@ -1170,3 +1166,27 @@ Yanfly.Util.displayError = function(e, code, message) {
 //=============================================================================
 // End of File
 //=============================================================================
+
+// CHANGED
+Window_StatCompare.prototype.createWidths = function() {
+    this._paramNameWidth = 0;
+    this._paramValueWidth = 0;
+    this._arrowWidth = this.textWidth('\u2192' + ' ');
+    var buffer = this.textWidth(' ');
+    //for (var i = 0; i < 8; ++i) {
+	var stats = this._statsArray;
+	for (var i = 0; i < stats.length; ++i) {
+	  //var value1 = this.textWidth(TextManager.param(i));
+      var value1 = this.textWidth(TextManager.param(stats[i]));
+      //var value2 = this.textWidth(Yanfly.Util.toGroup(this._actor.paramMax(i)));
+	  var value2 = this.textWidth(Yanfly.Util.toGroup(this._actor.paramMax(stats[i])));
+      this._paramNameWidth = Math.max(value1, this._paramNameWidth);
+      this._paramValueWidth = Math.max(value2, this._paramValueWidth);
+    }
+    this._bonusValueWidth = this._paramValueWidth;
+    this._bonusValueWidth += this.textWidth('(+)') + buffer;
+    this._paramNameWidth += buffer;
+    this._paramValueWidth;
+    if (this._paramNameWidth + this._paramValueWidth * 2 + this._arrowWidth +
+      this._bonusValueWidth > this.contents.width) this._bonusValueWidth = 0;
+};

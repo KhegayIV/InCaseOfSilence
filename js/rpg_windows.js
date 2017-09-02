@@ -436,6 +436,7 @@ Window_Base.prototype.drawIcon = function(iconIndex, x, y) {
     this.contents.blt(bitmap, sx, sy, pw, ph, x, y);
 };
 
+// UPDATED
 Window_Base.prototype.drawFace = function(faceName, faceIndex, x, y, width, height) {
     width = width || Window_Base._faceWidth;
     height = height || Window_Base._faceHeight;
@@ -448,23 +449,7 @@ Window_Base.prototype.drawFace = function(faceName, faceIndex, x, y, width, heig
     var dy = Math.floor(y + Math.max(height - ph, 0) / 2);
     var sx = faceIndex % 4 * pw + (pw - sw) / 2;
     var sy = Math.floor(faceIndex / 4) * ph + (ph - sh) / 2;
-	// CHANGED
-	//this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy);
-	var ratio = sw/sh;
-	var cw = Math.min(this.contents.width - 8, sw);
-	var ch = Math.min(this.contents.height - 8, sh);
-	
-	var dw = 0;
-	var dh = 0;
-	if (cw < this.ch * ratio){
-		dw = cw;
-		dh = dw / ratio;
-	} else {
-		dh = ch;
-		dw = dh * ratio;
-	}
-	this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy, Math.min(dw, dw/ratio), Math.min(dh, dh*ratio));
-  //
+	this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy);
     
 };
 
@@ -598,22 +583,17 @@ Window_Base.prototype.drawActorTp = function(actor, x, y, width) {
     this.drawText(actor.tp, x + width - 64, y, 64, 'right');
 };
 
-// LJ CHANGED
+// UPDATED
 Window_Base.prototype.drawActorSimpleStatus = function(actor, x, y, width) {
     var lineHeight = this.lineHeight();
     var x2 = x + 180;
     var width2 = Math.min(200, width - 180 - this.textPadding());
-	/*
     this.drawActorName(actor, x, y);
     this.drawActorLevel(actor, x, y + lineHeight * 1);
     this.drawActorIcons(actor, x, y + lineHeight * 2);
     this.drawActorClass(actor, x2, y);
     this.drawActorHp(actor, x2, y + lineHeight * 1, width2);
-    this.drawActorMp(actor, x2, y + lineHeight * 2, width2);*/
-	this.drawActorName(actor, x, y);
-	this.drawActorNickname(actor, x, y + lineHeight * 1);
-	this.drawActorIcons(actor, x, y + lineHeight * 2);
-	this.drawActorHp(actor, x2, y, width2);
+    this.drawActorMp(actor, x2, y + lineHeight * 2, width2);
 };
 
 Window_Base.prototype.drawItemName = function(item, x, y, width) {
@@ -1898,10 +1878,9 @@ Window_ItemCategory.prototype.windowWidth = function() {
     return Graphics.boxWidth;
 };
 
+// UPDATED
 Window_ItemCategory.prototype.maxCols = function() {
-	// CHANGED
-	// return 4;
-    return 2;
+	return 4;
 };
 
 Window_ItemCategory.prototype.update = function() {
@@ -1911,11 +1890,11 @@ Window_ItemCategory.prototype.update = function() {
     }
 };
 
+// UPDATED
 Window_ItemCategory.prototype.makeCommandList = function() {
     this.addCommand(TextManager.item,    'item');
-	// CHANGED
-    //this.addCommand(TextManager.weapon,  'weapon');
-    //this.addCommand(TextManager.armor,   'armor');
+    this.addCommand(TextManager.weapon,  'weapon');
+    this.addCommand(TextManager.armor,   'armor');
     this.addCommand(TextManager.keyItem, 'keyItem');
 };
 
@@ -2381,10 +2360,10 @@ Window_EquipCommand.prototype.maxCols = function() {
     return 3;
 };
 
+// UPDATED
 Window_EquipCommand.prototype.makeCommandList = function() {
     this.addCommand(TextManager.equip2,   'equip');
-	// CHANGED
-    //this.addCommand(TextManager.optimize, 'optimize');
+    this.addCommand(TextManager.optimize, 'optimize');
     this.addCommand(TextManager.clear,    'clear');
 };
 
@@ -6050,4 +6029,75 @@ Window_DebugEdit.prototype.updateVariable = function() {
             this.redrawCurrentItem();
         }
     }
+};
+
+// CHANGED
+Window_Base.prototype.drawFace = function(faceName, faceIndex, x, y, width, height) {
+    width = width || Window_Base._faceWidth;
+    height = height || Window_Base._faceHeight;
+    var bitmap = ImageManager.loadFace(faceName);
+    var pw = Window_Base._faceWidth;
+    var ph = Window_Base._faceHeight;
+    var sw = Math.min(width, pw);
+    var sh = Math.min(height, ph);
+    var dx = Math.floor(x + Math.max(width - pw, 0) / 2);
+    var dy = Math.floor(y + Math.max(height - ph, 0) / 2);
+    var sx = faceIndex % 4 * pw + (pw - sw) / 2;
+    var sy = Math.floor(faceIndex / 4) * ph + (ph - sh) / 2;
+	//this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy);
+	var ratio = sw/sh;
+	var cw = Math.min(this.contents.width - 8, sw);
+	var ch = Math.min(this.contents.height - 8, sh);
+	
+	var dw = 0;
+	var dh = 0;
+	if (cw < this.ch * ratio){
+		dw = cw;
+		dh = dw / ratio;
+	} else {
+		dh = ch;
+		dw = dh * ratio;
+	}
+	this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy, Math.min(dw, dw/ratio), Math.min(dh, dh*ratio));
+  //
+    
+};
+
+// CHANGED
+Window_Base.prototype.drawActorSimpleStatus = function(actor, x, y, width) {
+    var lineHeight = this.lineHeight();
+    var x2 = x + 180;
+    var width2 = Math.min(200, width - 180 - this.textPadding());
+	/*
+    this.drawActorName(actor, x, y);
+    this.drawActorLevel(actor, x, y + lineHeight * 1);
+    this.drawActorIcons(actor, x, y + lineHeight * 2);
+    this.drawActorClass(actor, x2, y);
+    this.drawActorHp(actor, x2, y + lineHeight * 1, width2);
+    this.drawActorMp(actor, x2, y + lineHeight * 2, width2);*/
+	this.drawActorName(actor, x, y);
+	this.drawActorNickname(actor, x, y + lineHeight * 1);
+	this.drawActorIcons(actor, x, y + lineHeight * 2);
+	this.drawActorHp(actor, x2, y, width2);
+};
+
+// CHANGED
+Window_ItemCategory.prototype.maxCols = function() {
+	// return 4;
+    return 2;
+};
+
+// CHANGED
+Window_ItemCategory.prototype.makeCommandList = function() {
+    this.addCommand(TextManager.item,    'item');
+    //this.addCommand(TextManager.weapon,  'weapon');
+    //this.addCommand(TextManager.armor,   'armor');
+    this.addCommand(TextManager.keyItem, 'keyItem');
+};
+
+// CHANGED
+Window_EquipCommand.prototype.makeCommandList = function() {
+    this.addCommand(TextManager.equip2,   'equip');
+    //this.addCommand(TextManager.optimize, 'optimize');
+    this.addCommand(TextManager.clear,    'clear');
 };

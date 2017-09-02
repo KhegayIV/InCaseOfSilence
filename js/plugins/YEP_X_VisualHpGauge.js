@@ -556,13 +556,11 @@ Window_VisualHPGauge.prototype.updateHpPosition = function() {
     this.updateDisplayCounter();
 };
 
+
+// UPDATED
 Window_VisualHPGauge.prototype.updateDisplayCounter = function() {
     if (this._battler._barrierAltered) {
       this._battler._barrierAltered = false;
-	  // CHANGED (ADD)
-    } else if (this._battler._requiresGaugeUpdate) {
-		this._battler._requiresGaugeUpdate = false;
-	// ---
 	} else if (this._currentHpValue === this._displayedValue) {
       return;
     }
@@ -601,6 +599,7 @@ Window_VisualHPGauge.prototype.hpGaugeColor2 = function() {
     return this.textColor(this._battler.hpGaugeColor2());
 };
 
+// UPDATED
 Window_VisualHPGauge.prototype.drawActorHp = function(actor, x, y, width) {
     width = width || 186;
     var color1 = this.hpGaugeColor1();
@@ -609,13 +608,7 @@ Window_VisualHPGauge.prototype.drawActorHp = function(actor, x, y, width) {
     if (Imported.YEP_AbsorptionBarrier && actor.barrierPoints() > 0) {
       ww = this.drawBarrierGauge(actor, x, y, width);
     } else {
-		
       this.drawGauge(x, y, width, rate, color1, color2);
-	  
-		// CHANGED (ADD)
-	  rate = (actor.hp - actor.def)/actor.mhp
-	  this.drawGaugeNoBack(x, y, width, rate, this.textColor(1),this.textColor(9))
-	  this.drawActorVulnerability(actor, x, y, width);
     }
     if (Yanfly.Param.VHGShowHP) {
       this.changeTextColor(this.systemColor());
@@ -688,4 +681,57 @@ if (!Yanfly.Util.toGroup) {
 //=============================================================================
 // End of File
 //=============================================================================
+};
+
+
+// CHANGED
+Window_VisualHPGauge.prototype.updateDisplayCounter = function() {
+    if (this._battler._barrierAltered) {
+      this._battler._barrierAltered = false;
+	  // (ADD)
+    } else if (this._battler._requiresGaugeUpdate) {
+		this._battler._requiresGaugeUpdate = false;
+	// ---
+	} else if (this._currentHpValue === this._displayedValue) {
+      return;
+    }
+    var d = this._dropSpeed;
+    var c = this._currentHpValue;
+    if (this._displayedValue > this._currentHpValue) {
+      this._displayedValue = Math.max(this._displayedValue - d, c);
+    } else if (this._displayedValue < this._currentHpValue) {
+      this._displayedValue = Math.min(this._displayedValue + d, c);
+    }
+    this._requestRefresh = true;
+};
+
+// CHANGED
+Window_VisualHPGauge.prototype.drawActorHp = function(actor, x, y, width) {
+    width = width || 186;
+    var color1 = this.hpGaugeColor1();
+    var color2 = this.hpGaugeColor2();
+    var rate = this._displayedValue / actor.mhp;
+    if (Imported.YEP_AbsorptionBarrier && actor.barrierPoints() > 0) {
+      ww = this.drawBarrierGauge(actor, x, y, width);
+    } else {
+		
+      this.drawGauge(x, y, width, rate, color1, color2);
+	  
+	// (ADD)
+	  rate = (actor.hp - actor.def)/actor.mhp
+	  this.drawGaugeNoBack(x, y, width, rate, this.textColor(1),this.textColor(9))
+	  this.drawActorVulnerability(actor, x, y, width);
+	// --
+    }
+    if (Yanfly.Param.VHGShowHP) {
+      this.changeTextColor(this.systemColor());
+      this.drawText(TextManager.hpA, x, y, 44);
+    }
+    if (Yanfly.Param.VHGShowValue) {
+      var val = this._displayedValue
+      var max = actor.mhp;
+      var w = width;
+      var color = this.hpColor(actor);
+      this.drawCurrentAndMax(val, max, x, y, w, color, this.normalColor());
+    }
 };

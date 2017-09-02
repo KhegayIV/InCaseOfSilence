@@ -2843,20 +2843,6 @@ Game_BattlerBase.prototype.canGuard = function() {
     return this.canUse($dataSkills[this.guardSkillId()]);
 };
 
-
-// CHANGED (ADD)
-// ---
-
-Game_BattlerBase.prototype.randomizeActionSpeed = function() {
-	this._speedAdd = 50 + Math.floor(Math.random()*100);
-}
-
-Game_BattlerBase.prototype.randomizedSpeed = function() {
-	this._speedAdd = this._speedAdd || 100;
-	return this.agi + this._speedAdd;
-};
-// ---
-
 //-----------------------------------------------------------------------------
 // Game_Battler
 //
@@ -10640,7 +10626,19 @@ Game_Interpreter.requestImages = function(list, commonList){
 };
 
 // ----------------------------------------------- 
+
 // CHANGED (ADD) 
+
+Game_BattlerBase.prototype.randomizeActionSpeed = function() {
+	this._speedAdd = 50 + Math.floor(Math.random()*100);
+}
+
+Game_BattlerBase.prototype.randomizedSpeed = function() {
+	this._speedAdd = this._speedAdd || 100;
+	return this.agi + this._speedAdd;
+};
+
+// ------
 
 Game_Battler.prototype.reduceMetadata = function(key, reduceFunc, initial) { 
   return undefined; 

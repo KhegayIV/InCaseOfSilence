@@ -2077,19 +2077,6 @@ Window_Base.prototype.tpCostColor = function() {
     return this.textColor(Yanfly.Param.ColorTpCost);
 };
 
-// CHANGED (ADD)
-Window_Base.prototype.drawGaugeNoBack = function(dx, dy, dw, rate, color1, color2) {
-	var fillW = Math.floor(dw * rate).clamp(0, dw);
-	var gaugeH = this.gaugeHeight();
-	var gaugeY = dy + this.lineHeight() - gaugeH - 2;
-	if (eval(Yanfly.Param.GaugeOutline)) {
-		fillW = Math.max(fillW - 2, 0);
-		gaugeH -= 2;
-		dx += 1;
-	}
-  this.contents.gradientFillRect(dx, gaugeY, fillW, gaugeH, color1, color2);
-}
-
 Window_Base.prototype.drawGauge = function(dx, dy, dw, rate, color1, color2) {
   var color3 = this.gaugeBackColor();
   var fillW = Math.floor(dw * rate).clamp(0, dw);
@@ -2157,27 +2144,15 @@ Window_Base.prototype.drawActorTp = function(actor, x, y, width) {
       'right');
 };
 
-// CHANGED (ADD)
-Window_Base.prototype.drawActorVulnerability = function(battler, x, y, width) {
-	var height = this.gaugeHeight();
-	var vul = battler._vulnerability || 100;
-	
-	this.drawIcon(1, x+ (width - 24)/2,y+4 ); // Vul Icon
-	this.drawText('×'+vul+'%', x, y, width, 'center');
 
-	
-}
-
+// UPDATED
 Window_Base.prototype.drawActorSimpleStatus = function(actor, x, y, width) {
     var lineHeight = this.lineHeight();
     var xpad = Window_Base._faceWidth + (2 * Yanfly.Param.TextPadding);
     var x2 = x + xpad;
     
-	//var width2 = Math.max(180, width - xpad - this.textPadding());
-	var width2 = width - xpad - this.textPadding();
+	var width2 = Math.max(180, width - xpad - this.textPadding());
 	
-	// CHANGED 
-	/*
     this.drawActorName(actor, x, y);
     this.drawActorLevel(actor, x, y + lineHeight * 1);
     this.drawActorIcons(actor, x, y + lineHeight * 2);
@@ -2187,11 +2162,6 @@ Window_Base.prototype.drawActorSimpleStatus = function(actor, x, y, width) {
     if (eval(Yanfly.Param.MenuTpGauge)) {
       this.drawActorTp(actor, x2, y + lineHeight * 3, width2);
     }
-	*/
-	this.drawActorName(actor, x, y);
-	this.drawActorNickname(actor, x, y + lineHeight * 1);
-	this.drawActorIcons(actor, x, y + lineHeight * 2);
-	this.drawActorHp(actor, x2, y, width2);
 };
 
 Window_Base.prototype.drawCurrencyValue = function(value, unit, wx, wy, ww) {
@@ -2287,6 +2257,7 @@ Window_ItemList.prototype.drawItemNumber = function(item, x, y, width) {
 // Window_SkillStatus
 //=============================================================================
 
+// UPDATED
 Window_SkillStatus.prototype.refresh = function() {
     this.contents.clear();
     if (this._actor) {
@@ -2299,10 +2270,7 @@ Window_SkillStatus.prototype.refresh = function() {
         }
         var xpad = Yanfly.Param.WindowPadding + Window_Base._faceWidth;
         var width = w - xpad - this.textPadding();
-        // CHANGED
-        //this.drawActorFace(this._actor, 0, 0, Window_Base._faceWidth, h);
-		this.drawActorFace(this._actor, 0, 0, Math.min(h,Window_Base._faceWidth), h);
-		//
+        this.drawActorFace(this._actor, 0, 0, Window_Base._faceWidth, h);
         this.drawActorSimpleStatus(this._actor, xpad, y, width);
     }
 };
@@ -2527,3 +2495,75 @@ Yanfly.Util.displayError = function(e, code, message) {
 //=============================================================================
 // End of File
 //=============================================================================
+
+
+// CHANGED (ADD)
+Window_Base.prototype.drawGaugeNoBack = function(dx, dy, dw, rate, color1, color2) {
+	var fillW = Math.floor(dw * rate).clamp(0, dw);
+	var gaugeH = this.gaugeHeight();
+	var gaugeY = dy + this.lineHeight() - gaugeH - 2;
+	if (eval(Yanfly.Param.GaugeOutline)) {
+		fillW = Math.max(fillW - 2, 0);
+		gaugeH -= 2;
+		dx += 1;
+	}
+  this.contents.gradientFillRect(dx, gaugeY, fillW, gaugeH, color1, color2);
+}
+
+// CHANGED (ADD)
+Window_Base.prototype.drawActorVulnerability = function(battler, x, y, width) {
+	var height = this.gaugeHeight();
+	var vul = battler._vulnerability || 100;
+	
+	this.drawIcon(1, x+ (width - 24)/2,y+4 ); // Vul Icon
+	this.drawText('×'+vul+'%', x, y, width, 'center');
+
+	
+}
+
+
+// CHANGED
+Window_Base.prototype.drawActorSimpleStatus = function(actor, x, y, width) {
+    var lineHeight = this.lineHeight();
+    var xpad = Window_Base._faceWidth + (2 * Yanfly.Param.TextPadding);
+    var x2 = x + xpad;
+    
+	//var width2 = Math.max(180, width - xpad - this.textPadding());
+	var width2 = width - xpad - this.textPadding();
+	
+	/*
+    this.drawActorName(actor, x, y);
+    this.drawActorLevel(actor, x, y + lineHeight * 1);
+    this.drawActorIcons(actor, x, y + lineHeight * 2);
+    this.drawActorClass(actor, x2, y, width2);
+    this.drawActorHp(actor, x2, y + lineHeight * 1, width2);
+    this.drawActorMp(actor, x2, y + lineHeight * 2, width2);
+    if (eval(Yanfly.Param.MenuTpGauge)) {
+      this.drawActorTp(actor, x2, y + lineHeight * 3, width2);
+    }
+	*/
+	this.drawActorName(actor, x, y);
+	this.drawActorNickname(actor, x, y + lineHeight * 1);
+	this.drawActorIcons(actor, x, y + lineHeight * 2);
+	this.drawActorHp(actor, x2, y, width2);
+};
+
+// CHANGED
+Window_SkillStatus.prototype.refresh = function() {
+    this.contents.clear();
+    if (this._actor) {
+        var w = this.width - this.padding * 2;
+        var h = this.height - this.padding * 2;
+        if (!eval(Yanfly.Param.MenuTpGauge)) {
+          var y = h / 2 - this.lineHeight() * 1.5;
+        } else {
+          var y = 0;
+        }
+        var xpad = Yanfly.Param.WindowPadding + Window_Base._faceWidth;
+        var width = w - xpad - this.textPadding();
+        //this.drawActorFace(this._actor, 0, 0, Window_Base._faceWidth, h);
+		this.drawActorFace(this._actor, 0, 0, Math.min(h,Window_Base._faceWidth), h);
+		//
+        this.drawActorSimpleStatus(this._actor, xpad, y, width);
+    }
+};
