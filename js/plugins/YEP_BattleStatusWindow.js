@@ -8,10 +8,11 @@ Imported.YEP_BattleStatusWindow = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BSW = Yanfly.BSW || {};
+Yanfly.BSW.version = 1.09;
 
 //=============================================================================
  /*:
- * @plugindesc v1.06 A simple battle status window that shows the
+ * @plugindesc v1.09 A simple battle status window that shows the
  * faces of your party members in horizontal format.
  * @author Yanfly Engine Plugins
  *
@@ -19,48 +20,89 @@ Yanfly.BSW = Yanfly.BSW || {};
  * @default
  *
  * @param No Action Icon
+ * @parent ---Visual---
+ * @type number
+ * @min 0
  * @desc This is the icon used when no action is selected.
  * @default 16
  *
  * @param Name Font Size
+ * @parent ---Visual---
+ * @type number
+ * @min 1
  * @desc This is the font size used to draw the actor's name.
  * Default: 28
  * @default 20
  *
  * @param Param Font Size
+ * @parent ---Visual---
+ * @type number
+ * @min 1
  * @desc This is the font size used to draw the actor's params.
  * Default: 28
  * @default 20
  *
  * @param Param Y Buffer
+ * @parent ---Visual---
+ * @type number
+ * @min 0
  * @desc This is how much further the text drawn for params is
  * lowered by.
  * @default 7
  *
  * @param Param Current Max
+ * @parent ---Visual---
+ * @type boolean
+ * @on Current/Max
+ * @off Current Only
  * @desc Draw current / max format?
  * NO - false     YES - true
  * @default false
  *
  * @param Adjust Columns
+ * @parent ---Visual---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Adjust column amount to party size?
  * NO - false     YES - true
  * @default false
+ *
+ * @param State Icons Row
+ * @parent ---Visual---
+ * @type number
+ * @min 0
+ * @max 3
+ * @desc Which row do you wish to display the state icons?
+ * Default: 1
+ * @default 1
  *
  * @param ---Actor Switching---
  * @default
  *
  * @param Left / Right
+ * @parent ---Actor Switching---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Use 'left' and 'right' for switching actors?
  * NO - false     YES - true
  * @default true
  *
  * @param PageUp / PageDown
+ * @parent ---Actor Switching---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Use 'page up' and 'page down' for switching actors?
  * NO - false     YES - true
  * @default true
  *
  * @param Allow Turn Skip
+ * @parent ---Actor Switching---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Allow turn skipping for Tick-Based battle systems?
  * NO - false     YES - true
  * @default true
@@ -69,25 +111,41 @@ Yanfly.BSW = Yanfly.BSW || {};
  * @default
  *
  * @param Show Animations
+ * @parent ---Front View---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Reveal actors and show their animations in front view?
  * NO - false     YES - true
  * @default true
  *
  * @param Show Sprites
+ * @parent ---Front View---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the sprites of the actors in front view?
  * NO - false     YES - true
  * @default false
  *
  * @param Align Animations
+ * @parent ---Front View---
+ * @type boolean
+ * @on Align
+ * @off Don't Align
  * @desc If using front view, align battle animations to window?
  * NO - false     YES - true
  * @default true
  *
  * @param X Offset
+ * @parent ---Front View---
+ * @type number
  * @desc How much do you wish to offset the actor X position by?
  * @default 24
  *
  * @param Y Offset
+ * @parent ---Front View---
+ * @type number
  * @desc How much do you wish to offset the actor Y position by?
  * @default -16
  *
@@ -106,6 +164,16 @@ Yanfly.BSW = Yanfly.BSW || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.09:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.08:
+ * - Added 'State Icons Row' plugin parameter. This plugin parameter allows you
+ * to adjust what 'row' you want the state icons to appear in.
+ *
+ * Version 1.07:
+ * - Optimization update.
  *
  * Version 1.06:
  * - Fixed a bug that prevented animations from using flashes on the actor
@@ -151,7 +219,9 @@ Yanfly.Param.BSWNameFontSize = Number(Yanfly.Parameters['Name Font Size']);
 Yanfly.Param.BSWParamFontSize = Number(Yanfly.Parameters['Param Font Size']);
 Yanfly.Param.BSWParamYBuffer = Number(Yanfly.Parameters['Param Y Buffer']);
 Yanfly.Param.BSWCurrentMax = String(Yanfly.Parameters['Param Current Max']);
+Yanfly.Param.BSWCurrentMax = eval(Yanfly.Param.BSWCurrentMax);
 Yanfly.Param.BSWAdjustCol = eval(String(Yanfly.Parameters['Adjust Columns']));
+Yanfly.Param.BSWStateIconRow = Number(Yanfly.Parameters['State Icons Row']);
 
 Yanfly.Param.BSWLfRt = eval(String(Yanfly.Parameters['Left / Right']));
 Yanfly.Param.BSWPageUpDn = eval(String(Yanfly.Parameters['PageUp / PageDown']));
@@ -274,7 +344,7 @@ Sprite_Actor.prototype.setActorHome = function(index) {
 
 Sprite_Actor.prototype.setActorHomeFrontView = function(index) {
     if (Imported.YEP_BattleEngineCore) {
-      var statusHeight = eval(Yanfly.Param.BECCommandRows);
+      var statusHeight = Yanfly.Param.BECCommandRows;
     } else {
       var statusHeight = 4;
     }
@@ -401,7 +471,7 @@ Window_ActorCommand.prototype.processCancel = function() {
 
 Window_BattleStatus.prototype.createContents = function() {
     this.createFaceContents();
-    this._currentMax = eval(Yanfly.Param.BSWCurrentMax);
+    this._currentMax = Yanfly.Param.BSWCurrentMax;
     Window_Selectable.prototype.createContents.call(this);
 };
 
@@ -461,6 +531,7 @@ Window_BattleStatus.prototype.drawItem = function(index) {
     var actor = $gameParty.battleMembers()[index];
     this.drawBasicArea(this.basicAreaRect(index), actor);
     this.drawGaugeArea(this.gaugeAreaRect(index), actor);
+    this.drawStateArea(this.basicAreaRect(index), actor);
 };
 
 Window_BattleStatus.prototype.drawBasicArea = function(rect, actor) {
@@ -474,8 +545,6 @@ Window_BattleStatus.prototype.drawBasicArea = function(rect, actor) {
     this.resetFontSettings();
     this.contents.fontSize = Yanfly.Param.BSWNameFontSize;
     this.drawActorName(actor, rect.x + iw + 4, rect.y, rect.width);
-    var wy = rect.y + this.lineHeight();
-    this.drawActorIcons(actor, rect.x + 2, wy, rect.width);
 };
 
 Window_BattleStatus.prototype.basicAreaRect = function(index) {
@@ -499,6 +568,13 @@ Window_BattleStatus.prototype.drawGaugeArea = function(rect, actor) {
       this.drawActorTp(actor, rect.x + ww, wy, ww);
     }
     this._enableYBuffer = false;
+};
+
+Window_BattleStatus.prototype.drawStateArea = function(rect, actor) {
+  var row = Yanfly.Param.BSWStateIconRow;
+  if (row === undefined) row = 1;
+  var wy = rect.y + (this.lineHeight() * row);
+  this.drawActorIcons(actor, rect.x + 2, wy, rect.width);
 };
 
 Window_BattleStatus.prototype.getGaugesDrawn = function(actor) {
